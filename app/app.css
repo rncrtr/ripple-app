@@ -1,25 +1,21 @@
 /* app css stylesheet */
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.nav-link{
+  padding: 10px 0px !important;
 }
 
-.menu:before {
-  content: "[";
+.page{margin: 0px; padding: 0px;}
+
+.list-group-item i{
+  position: absolute;
+  margin-top: 5px;
+  right: 10px;
 }
 
-.menu:after {
-  content: "]";
+a{
+  color: #000000 !important;
 }
 
-.menu > li {
-  display: inline;
-}
-
-.menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
+.no-border{
+  border: none;
 }

@@ -1,5 +1,12 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div class="page" ng-controller="View2Ctrl">
+  <nav-menu></nav-menu>
+  <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
+  <ul class="list-group">
+      <li class="list-group-item" ng-repeat="mi in menuItems">
+         <a href="{{mi.url}}">
+            {{mi.name}}
+            <i class="fas fa-fw fa-chevron-right"></i>
+         </a>
+      </li>
+    </ul>
+</div>
