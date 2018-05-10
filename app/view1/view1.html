@@ -1,7 +1,6 @@
 <div class="page">
-    <nav-menu></nav-menu>
     <div>
-        <video controls
+        <video id="welcome_video"
         src="assets/videos/wfc-welcome-video.mp4"
         poster="assets/images/welcome-video-still.jpg" width="100%" height="205">
         Sorry, your browser doesn't support embedded videos, 
@@ -12,7 +11,7 @@
     <ul class="list-group home-menu">
       <li class="list-group-item" ng-repeat="mi in menuItems">
          <a href="{{mi.url}}">
-            {{mi.name}}
+            {{mi.name}}&nbsp;&nbsp;&nbsp;<span ng-if="mi.ext==true" class="text-left fas fa-fw fa-external-link-alt"></span>
             <i class="fas fa-fw fa-chevron-right"></i>
          </a>
       </li>

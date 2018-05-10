@@ -1,10 +1,19 @@
 /* app css stylesheet */
 
+#wfc-menu{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 99999;
+}
+
+h3{padding-top: 10px;}
+
 .nav-link{
   padding: 10px 13px !important;
 }
 
-.page{margin: 0px; padding: 0px;}
+.page{margin-top: 46px; padding: 0px;}
 
 .list-group-item i{
   position: absolute;
