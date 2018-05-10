@@ -1,7 +1,7 @@
 /* app css stylesheet */
 
 .nav-link{
-  padding: 10px 0px !important;
+  padding: 10px 13px !important;
 }
 
 .page{margin: 0px; padding: 0px;}
@@ -11,11 +11,29 @@
   margin-top: 5px;
   right: 10px;
 }
+.list-group-item:first-child {
+border-radius: 0px !important;
+}
 
 a{
   color: #000000 !important;
 }
 
+.link{
+  color: #007bff !important;
+  text-decoration: underline;
+}
+
+.link-white{
+  color: #FFF !important;
+}
+
 .no-border{
   border: none;
 }
+
+.iframe-loader {
+  background:url(../assets/images/loader.gif) top center no-repeat;
+}
+
+.nopad{padding-left: 0px; padding-right: 0px; }

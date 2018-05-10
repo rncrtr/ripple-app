@@ -9,6 +9,8 @@ angular.module('myApp', [
   'myApp.view4',
   'myApp.about',
   'myApp.services',
+  'myApp.giving',
+  'myApp.foodbank',
   'goback',
   'navMenu'
 ]).

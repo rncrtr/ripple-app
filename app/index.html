@@ -6,7 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>WFC</title>
+  <title>White Flag Calvary</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" sizes="192x192" href="../assets/images/wfc-logo.png">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
@@ -29,34 +31,19 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
-  <script>
-    if(window.location.hash.indexOf('view3')!=-1) {
-      /* global $ */
-      var url = 'https://whiteflagcalvary.org/discipleship';
-	   // $.get('http://livinginchrist.org/wp-content/media/dbdbg/dbdbg.php', function(response){
-		  //   $('#devo').html(response);
-	   // });
-	    
-	    $.ajax({
-        url: url,
-        dataType: 'jsonp',
-        jsonp: 'callback',
-        jsonpCallback: 'jsonpCallback',
-        success: function(){
-          alert("success");
-        }
-            });
-    }
-  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="assets/scripts/main.js"></script>
   <script src="app.js"></script>
   <script src="components/goback.js"></script>
   <script src="components/nav-menu.js"></script>
+  <!--<script src="components/bibleref.js"></script>-->
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
   <script src="view3/view3.js"></script>
   <script src="view4/view4.js"></script>
   <script src="about/about.js"></script>
   <script src="services/services.js"></script>
+  <script src="giving/giving.js"></script>
+  <script src="foodbank/foodbank.js"></script>
 </body>
 </html>
