@@ -1,5 +1,6 @@
 {
   "name": "White Flag Calvary",
+  "short_name":"White Flag,
   "icons": [
     {
       "src": "launcher-icon-0-75x.png",
@@ -40,5 +41,6 @@
   ],
   "start_url": "index.html",
   "display": "standalone",
-  "orientation": "landscape"
+  "background_color": "#FFFFFF",
+  "orientation": "portrait"
 }
