@@ -9,6 +9,22 @@ angular.module('myApp.discipleship', ['ngRoute'])
   });
 }])
 
-.controller('DiscipleshipCtrl', ['$scope',function($scope) {
+.filter('trustAsResourceUrl', ['$sce', function ($sce) {
+    return function (val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}])
 
+.controller('DiscipleshipCtrl', ['$scope',function($scope) {
+  
+  $scope.currentAudio = null;
+  
+  $scope.setCurrentAudio = function(url){
+    console.log(url);
+    $scope.currentAudio = url;
+  }
+  
+  $scope.getCurrentAudio = function(audioUrl){
+    return audioUrl;
+  }
 }]);
