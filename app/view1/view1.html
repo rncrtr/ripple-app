@@ -9,11 +9,11 @@
         </video>
     </div>
     <ul class="list-group home-menu">
-      <li class="list-group-item" ng-repeat="mi in menuItems">
-         <a href="{{mi.url}}">
-            {{mi.name}}&nbsp;&nbsp;&nbsp;<span ng-if="mi.ext==true" class="text-left fas fa-fw fa-external-link-alt"></span>
-            <i class="fas fa-fw fa-chevron-right"></i>
-         </a>
-      </li>
+        <li class="list-group-item" ng-repeat="mi in menuItems">
+            <a href="{{mi.url}}">
+                {{mi.name}}<span ng-if="mi.ext==true" class="ext-link text-left fas fa-fw fa-external-link-alt"></span>
+                <i class="fas fa-fw fa-chevron-right"></i>
+            </a>
+        </li>
     </ul>
 </div>

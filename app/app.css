@@ -2,16 +2,25 @@
 
 #wfc-menu{
   position: fixed;
-  top: 0px;
+  top: 
+  0px;
   width: 100%;
   z-index: 99999;
 }
+
+.home-menu{margin-top: 25px;}
 
 h3{padding-top: 10px;}
 
 .nav-link{
   padding: 10px 10px !important;
 }
+
+.ext-link{
+  margin-left: 10px;
+}
+
+.js-push-btn{border-radius: 0px !important;}
 
 .page{margin-top: 46px; padding: 0px;}
 

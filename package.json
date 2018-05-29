@@ -16,21 +16,19 @@
     "karma-junit-reporter": "^0.4.1",
     "protractor": "^4.0.9"
   },
-  "dependencies":{
-    "express"    : "~4.7.2",
-    "mongoose"   : "~3.6.2",
-    "morgan"     : "~1.2.2",
-    "body-parser": "~1.5.2",
-    "method-override": "~2.1.2"
+  "dependencies": {
+    "body-parser": "^1.5.2",
+    "express": "^4.7.4",
+    "method-override": "~2.1.2",
+    "mongoose": "~3.6.2",
+    "morgan": "^1.2.3"
   },
   "scripts": {
     "postinstall": "bower install",
-
     "update-deps": "npm update",
     "postupdate-deps": "bower update",
-
     "prestart": "npm install",
     "starthttp": "http-server -a localhost -p 8080 -c-1 ./app",
-    "start":"node server.js"
+    "start": "node server.js"
   }
 }
