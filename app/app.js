@@ -12,6 +12,8 @@ angular.module('myApp', [
   'myApp.giving',
   'myApp.foodbank',
   'myApp.discipleship',
+  'myApp.missions',
+  'myApp.resources',
   'goback',
   'navMenu'
 ]).
