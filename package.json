@@ -6,7 +6,6 @@
   "repository": "https://github.com/angular/angular-seed",
   "license": "MIT",
   "devDependencies": {
-    "bower": "^1.7.7",
     "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
@@ -14,21 +13,23 @@
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
-    "protractor": "^4.0.9"
+    "protractor": "^4.0.9",
+    "workbox-build": "^3.2.0",
+    "workbox-cli": "^3.2.0"
   },
   "dependencies": {
     "body-parser": "^1.5.2",
     "express": "^4.7.4",
+    "firebase": "^5.0.4",
     "method-override": "~2.1.2",
     "mongoose": "~3.6.2",
     "morgan": "^1.2.3"
   },
   "scripts": {
-    "postinstall": "bower install",
     "update-deps": "npm update",
-    "postupdate-deps": "bower update",
     "prestart": "npm install",
     "starthttp": "http-server -a localhost -p 8080 -c-1 ./app",
-    "start": "node server.js"
+    "start": "node server.js",
+    "gensw": "workbox generateSW workbox-config.js"
   }
 }
