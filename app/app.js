@@ -1,24 +1,26 @@
 'use strict';
 /* global angular */
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('whiteflag', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.view3',
-  'myApp.view4',
-  'myApp.about',
-  'myApp.services',
-  'myApp.giving',
-  'myApp.foodbank',
-  'myApp.discipleship',
-  'myApp.missions',
-  'myApp.resources',
+  'whiteflag.home',
+  'whiteflag.studies',
+  'whiteflag.devotions',
+  'whiteflag.newsAdmin',
+  'whiteflag.news',
+  'whiteflag.settings',
+  'whiteflag.about',
+  'whiteflag.services',
+  'whiteflag.giving',
+  'whiteflag.foodbank',
+  'whiteflag.discipleship',
+  'whiteflag.missions',
+  'whiteflag.resources',
   'goback',
   'navMenu'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }]);

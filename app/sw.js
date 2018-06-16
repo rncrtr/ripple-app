@@ -1,43 +1,38 @@
-var CACHE_NAME = 'static-cache';
-var urlsToCache = [
-    '.',
-    'app',
-    'app/*',
-    'index.html'
-];
-self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function (cache) {
-                return cache.addAll(urlsToCache);
-            })
-    );
+// importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.2.0/workbox-sw.js");
+
+// workbox.precaching.suppressWarnings();
+
+// workbox.routing.registerRoute(/.*(?:cloudflare|googleapis|gstatic|bootstrapcdn|fontawesome)\.com.*$/,
+//     workbox.strategies.staleWhileRevalidate({
+//         cacheName: 'cdn-assets',
+//         plugins: [
+//             new workbox.expiration.Plugin({
+//                 // Only cache requests for a day
+//                 maxAgeSeconds: 1 * 24 * 60 * 60,
+//                 // Only cache 10 requests.
+//                 maxEntries: 10,
+//             }),
+//         ]
+//     })
+// );
+
+// workbox.precaching.precacheAndRoute([]);
+
+self.addEventListener('install',function (event) {
+  console.log('[SW] Installing SW...', event);
+  event.waitUntil(
+    caches.open('static')
+    .then(function(){
+      console.log('[SW] Precaching App Shell');  
+    });
+  );
 });
 
-self.addEventListener('fetch', function (event) {
-    event.respondWith(
-        caches.match(event.request)
-            .then(function (response) {
-                return response || fetchAndCache(event.request);
-            })
-    );
+self.addEventListener('activate',function (event) {
+  console.log('[SW] Activating SW...',event);
+  return self.clients.claim();
 });
 
-function fetchAndCache(url) {
-    return fetch(url)
-        .then(function (response) {
-            // Check if we received a valid response
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return caches.open(CACHE_NAME)
-                .then(function (cache) {
-                    cache.put(url, response.clone());
-                    return response;
-                });
-        })
-        .catch(function (error) {
-            console.log('Request failed:', error);
-            // You could return a custom offline 404 page here
-        });
-}
+self.addEventListener('activate', function (event) {
+  event.respondWith(fetch(event.request));
+});

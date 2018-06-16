@@ -1,55 +1,77 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<html lang="en" ng-app="whiteflag" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>White Flag Calvary</title>
   <meta name="description" content="">
+  <meta name="theme-color" content="#333333">
   <link rel="manifest" href="manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 </head>
-<body>
+<body id="body">
   <div class="container" style="margin: 0px; padding: 0px;">
-    <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
     <nav-menu></nav-menu>
-    <div class="js-subscription-json col-sm-12 hidden"></div>
-    <div class="js-subscription-details col-sm-12 hidden"></div>
-    <span class="pushupd-switch" ng-show="window.location.href.indexOf('view1')!=-1" style="font-size: 0.7em; margin-top: 205px; margin-left: 20px; z-index: 999999; position: absolute; display: inline;">
-      Push Updates? 
-      <button class="js-push-btn col-sm-12 btn btn-link" style="font-size: 1em; text-align: left; display: inline; margin-top: -32px; margin-left: 65px;">NO</button>
-    </span>
     <div ng-view></div>
   </div>
+  <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
+    <div class="col">
+      <h4>Settings</h4>
+      <div class="col">
+        <!--LIVE UPDATES-->
+        <b>Live Updates</b>
+        <p>
+          If you would like to receive live updates from White Flag Calvary, you can enable them here. Otherwise,
+          you won't see the updates on your device unless you click on the Announcements page.
+        </p>
+        <button type="button" class="enable-notifications btn btn-sm btn-block btn-primary">Enable live updates</button><br />
+        <span id="disable-message" style="display: none;">NOTE: Notifications can be disabled in your device's application settings.</span>
+      </div>
+      <!--/LIVE UPDATES-->
+      <hr style="border-top: 1px solid #FFFFFF;" />
+      <!--ADMIN-->
 
+      <!--/ADMIN-->
+    </div>
+  </div>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAE9TE6kDsX1N3zjX1ELf3lKjvjHD-wUmg",
+      authDomain: "whiteflagmobile.firebaseapp.com",
+      databaseURL: "https://whiteflagmobile.firebaseio.com",
+      projectId: "whiteflagmobile",
+      storageBucket: "whiteflagmobile.appspot.com",
+      messagingSenderId: "636514957068"
+    };
+    firebase.initializeApp(config);
+
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="assets/scripts/main.js"></script>
-  <script src="assets/scripts/jquery.fn.js"></script>
+  <!-- <script src="assets/scripts/main.js"></script> -->
+  <script src="jquery.fn.js"></script>
   <script src="app.js"></script>
   <script src="components/goback.js"></script>
   <script src="components/nav-menu.js"></script>
-  <!--<script src="components/bibleref.js"></script>-->
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="view3/view3.js"></script>
-  <script src="view4/view4.js"></script>
+  <script src="home/home.js"></script>
+  <script src="news/news.js"></script>
+  <script src="newsadmin/newsadmin.js"></script>
+  <script src="studies/studies.js"></script>
+  <script src="devotions/devotions.js"></script>
+  <!-- <script src="prayer/prayer.js"></script> -->
   <script src="about/about.js"></script>
   <script src="services/services.js"></script>
   <script src="missions/missions.js"></script>
@@ -57,5 +79,7 @@
   <script src="foodbank/foodbank.js"></script>
   <script src="discipleship/discipleship.js"></script>
   <script src="resources/resources.js"></script>
+  <script src="settings/settings.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

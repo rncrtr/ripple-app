@@ -27,5 +27,18 @@
 				</a>
 			</li>
 		</ul>
+
+<br />
+<hr />
+<br />
+		<h4 ng-if="videos.length > 0">Videos</h4>
+		<ul class="list-group resources-menu">
+			<li class="list-group-item" ng-repeat="v in videos">
+				<a href="{{v.url}}" target="_blank">
+					<i ng-class="v.icon" class="text-left"></i>
+					{{v.name}}
+				</a>
+			</li>
+		</ul>
 	</div>
 </div>

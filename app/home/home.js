@@ -1,23 +1,24 @@
 'use strict';
 /* global angular */
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('whiteflag.home', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/home', {
+    templateUrl: 'home/home.html',
+    controller: 'HomeCtrl'
   });
 }])
 
-.controller('View1Ctrl', ['$scope',function($scope) {
+.controller('HomeCtrl', ['$scope', function ($scope) {
     $scope.topBanner = null;
     $scope.menuItems = [
+      { name: 'Announcements', url: '#!/news'},
       { name: 'Services & Contact Info', url: '#!/services'},
       { name: 'Map', url:'https://www.google.com/maps/place/4625+E+Iowa+Ave,+Denver,+CO+80222/@39.6836303,-104.9332396,15z/data=!4m7!1m4!3m3!1s0x876c7dde82eac263:0x2912172574625955!2s4625+E+Iowa+Ave,+Denver,+CO+80222!3b1!3m1!1s0x876c7dde82eac263:0x2912172574625955',ext: true},
       { name: 'Discipleship', url:'#!/discipleship'},
-      { name: 'Studies', url:'#!/view2'},
-      { name: 'Today\'s Devotion', url: '#!/view3' },
-      { name: 'Prayer Requests', url: '#!/view4' },
+      { name: 'Studies', url:'#!/studies'},
+      { name: 'Today\'s Devotion', url: '#!/devotions' },
+      { name: 'Prayer Requests', url: '#!/prayer' },
       { name: 'Missions', url: '#!/missions' },
       { name: 'Giving', url:'#!/giving'},
       { name: 'Resources', url: '#!/resources' },

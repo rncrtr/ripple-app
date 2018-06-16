@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.services', ['ngRoute'])
+angular.module('whiteflag.services', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/services', {

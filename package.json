@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
+  "name": "whiteflag-ng",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "White Flag Calvary PWA",
+  "repository": "https://github.com/rncrtr/whiteflag-ng",
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.9.0",
@@ -27,9 +27,8 @@
   },
   "scripts": {
     "update-deps": "npm update",
-    "prestart": "npm install",
     "starthttp": "http-server -a localhost -p 8080 -c-1 ./app",
     "start": "node server.js",
-    "gensw": "workbox generateSW workbox-config.js"
+    "gensw": "workbox injectManifest app/workbox-config.js"
   }
 }

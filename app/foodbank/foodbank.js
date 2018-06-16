@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.foodbank', ['ngRoute'])
+angular.module('whiteflag.foodbank', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/foodbank', {

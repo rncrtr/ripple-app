@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.missions', ['ngRoute'])
+angular.module('whiteflag.missions', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/missions', {

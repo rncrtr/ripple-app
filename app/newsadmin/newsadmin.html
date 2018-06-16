@@ -1,0 +1,41 @@
+<div class="page" ng-controller="NewsAdminCtrl">
+    <goback></goback>
+    <div class="col">
+        <div ng-if="showLoginForm">
+            <h3>Login</h3>
+            <table width="100%">
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="text" ng-model="userEmail" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Pass:
+                    </td>
+                    <td>
+                        <input type="password" ng-model="userPassword" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <button class="btn btn-primary btn-block" ng-click="loginUser()">Login</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="loggedInOnly">
+            <h3>Shawn's Eyes Only</h3>
+            <small>Push Notification to send to all subscribers:</small>
+            <textarea type="text" rows="3" cols="45" class="input-block"></textarea>
+            <button ng-click="sendPushMessage()" class="btn btn-primary btn-block">Send Now</button>
+            <button ng-click="logoutUser()" class="btn btn-link">Logout</button>
+        </div>
+    </div>
+    <div class="col">
+        <h3>Announcements</h3>
+
+    </div>
+</div>

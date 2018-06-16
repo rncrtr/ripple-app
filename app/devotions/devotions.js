@@ -1,17 +1,17 @@
 'use strict';
 /* global angular */
-angular.module('myApp.view3', ['ngRoute'])
+angular.module('whiteflag.devotions', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view3', {
-    templateUrl: 'view3/view3.html',
-    controller: 'View3Ctrl'
+  $routeProvider.when('/devotions', {
+    templateUrl: 'devotions/devotions.html',
+    controller: 'DevotionsCtrl'
   });
 }])
 
-.controller('View3Ctrl', ['$scope',function($scope) {
+.controller('DevotionsCtrl', ['$scope',function($scope) {
   
-    if(window.location.hash.indexOf('view3')!=-1) {
+    if(window.location.hash.indexOf('devotions')!=-1) {
       /* global $ */
       var url = 'http://livinginchrist.org/wp-content/media/dbdbg/dbdbg.php';
 	   // $.get(url, function(response){

@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.discipleship', ['ngRoute'])
+angular.module('whiteflag.discipleship', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/discipleship', {

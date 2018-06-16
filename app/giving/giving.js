@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.giving', ['ngRoute'])
+angular.module('whiteflag.giving', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/giving', {

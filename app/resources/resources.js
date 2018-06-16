@@ -1,6 +1,6 @@
 'use strict';
 /* global angular */
-angular.module('myApp.resources', ['ngRoute'])
+angular.module('whiteflag.resources', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/resources', {
@@ -24,6 +24,10 @@ angular.module('myApp.resources', ['ngRoute'])
     ];
 
     $scope.books = [
+
+    ];
+
+    $scope.videos = [
 
     ];
 
