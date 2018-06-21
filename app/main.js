@@ -5,6 +5,8 @@
 var deferredPrompt;
 var enableNotificationsButtons = document.querySelectorAll('.enable-notifications');
 var disableNotificationsButtons = document.querySelectorAll('.disable-notifications');
+var vapidPublicKey = 'BC1qaKiOtzHYJ_1ZC0pODkVDMuwa-8VHkxNawBvVKBRDkrauLrb0B9Lj5u9TiBm9HjJYo-io_MWSSSn2fii3YW4';
+var convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey);
 // REGISTER SERVICE WORKER
 
 if (!window.Promise) {
@@ -53,8 +55,6 @@ function displayConfirmNotification() {
 
 function createSub() {
     // Create a new subscription
-    var vapidPublicKey = 'BC1qaKiOtzHYJ_1ZC0pODkVDMuwa-8VHkxNawBvVKBRDkrauLrb0B9Lj5u9TiBm9HjJYo-io_MWSSSn2fii3YW4';
-    var convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey);
     var sub = checkForSub();
     if(sub === null){
         return reg.pushManager.subscribe({
@@ -149,8 +149,9 @@ function updateButton(sub){
     }
 }
 
+
 // init
-if ('Notification' in window && 'serviceWorker' in navigator) {
-    var sub = checkForSub();
-    updateButton(sub);
-}
+// if ('Notification' in window && 'serviceWorker' in navigator) {
+//     var sub = checkForSub();
+//     updateButton(sub);
+// }
