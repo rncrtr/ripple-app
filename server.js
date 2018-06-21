@@ -1,7 +1,9 @@
 // set up ========================
+require('dotenv').config();
 var express  = require('express');
 var app      = express();                               // create our app w/ express
 //var mongoose = require('mongoose');                     // mongoose for mongodb
+var path = require('path');
 var morgan = require('morgan');             // log requests to the console (express4)
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
@@ -22,7 +24,7 @@ app.post('/api/sendmail',function(req,res){
   // using SendGrid's v3 Node.js Library
   // https://github.com/sendgrid/sendgrid-nodejs
   const sgMail = require('@sendgrid/mail');
-  sgMail.setApiKey('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');
+  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   const msg = {
     to: email.to,
     from: email.from,
