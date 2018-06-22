@@ -26,7 +26,7 @@ window.addEventListener('beforeinstallprompt', function (e) {
 
 var btnInstallToHomeScreen = document.getElementById('btnInstallToHomeScreen');
 btnInstallToHomeScreen.addEventListener('click',(e) =>{
-    //btnInstallToHomeScreen.style.display = 'none';
+    btnInstallToHomeScreen.style.display = 'none';
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
         if(choiceResult.outcome === 'accepted'){
