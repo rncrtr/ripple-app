@@ -5,4 +5,5 @@ bower_components/
 package-lock.json
 tmp
 .DS_Store
-.ideasendgrid.env
+.idea
+.env
