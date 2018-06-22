@@ -6,7 +6,7 @@
   <title>White Flag Calvary</title>
   <meta name="description" content="">
   <meta name="theme-color" content="#333333">
-  <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIldoaXRlIEZsYWcgQ2FsdmFyeSIsCiAgInNob3J0X25hbWUiOiJXaGl0ZUZsYWdNb2JpbGUiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICIuL2Fzc2V0cy9pbWFnZXMvYXBwLWljb240OC5wbmciLAogICAgICAic2l6ZXMiOiAiNDh4NDgiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgICAiZGVuc2l0eSI6IDEuMAogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICIuL2Fzc2V0cy9pbWFnZXMvYXBwLWljb243Mi5wbmciLAogICAgICAic2l6ZXMiOiAiNzJ4NzIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgICAiZGVuc2l0eSI6IDEuNQogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICIuL2Fzc2V0cy9pbWFnZXMvYXBwLWljb245Ni5wbmciLAogICAgICAic2l6ZXMiOiAiOTZ4OTYiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgICAiZGVuc2l0eSI6IDIuMAogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJhc3NldHMvaW1hZ2VzL2FwcC1pY29uMTQ0LnBuZyIsCiAgICAgICJzaXplcyI6ICIxNDR4MTQ0IiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgImRlbnNpdHkiOiAzLjAKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiLi9hc3NldHMvaW1hZ2VzL2FwcC1pY29uMTkyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgImRlbnNpdHkiOiA0LjAKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiYXNzZXRzL2ltYWdlcy9hcHAtaWNvbjUxMi5wbmciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJkZW5zaXR5IjogNS4wCiAgICB9CiAgXSwKICAic3RhcnRfdXJsIjogIiMhL2hvbWUiLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNGRkZGRkYiLAogICJ0aGVtZV9jb2xvciI6IiMzMzMzMzMiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImdjbV9zZW5kZXJfaWQiOiAiMTAzOTUzODAwNTA3Igp9" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <meta name="mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <div class="col">
       <h4>Settings</h4>
       <div class="col">
-      
+        
       </div>
     </div>
   </div>
@@ -49,6 +49,7 @@
             and watch it with your favorite video player!
             </video>
         </div>
+        <button type="button" class="btn btn-primary btn-block" id="btnInstallToHomeScreen" name="btnInstallToHomeScreen">Install App</button>
         <ul class="list-group home-menu">
             <li class="list-group-item" ng-repeat="mi in menuItems">
                 <a href="{{mi.url}}">
