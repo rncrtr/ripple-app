@@ -1,168 +1,175 @@
-var deferredPrompt;
-
 // REGISTER SERVICE WORKER
-
-if (!window.Promise) {
-    window.Promise = Promise;
-}
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/sw.js')
-        .then(function () {
-            console.log('Service worker registered!');
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
-
-window.addEventListener('beforeinstallprompt', function (e) {
-    console.log('beforeinstallprompt fired');
-    event.preventDefault();
-    deferredPrompt = e;
-    return false;
-});
-
-var btnInstallToHomeScreen = document.getElementById('btnInstallToHomeScreen');
-btnInstallToHomeScreen.addEventListener('click',(e) =>{
-    btnInstallToHomeScreen.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if(choiceResult.outcome === 'accepted'){
-            console.log('User accepted the A2HS prompt');
-        }else{
-            console.log('User did NOT accept A2HS.');
-        }
-        deferredPrompt = null;
-    });
-});
-
-window.addEventListener('appinstalled',(evt) => {
-    app.logEvent('a2hs','installed');
-});
-
-// function displayConfirmNotification() {
-//     if ('serviceWorker' in navigator) {
-//         var options = {
-//             body: 'You successfully subscribed to live updates!',
-//             actions: [{
-//                     action: 'confirm',
-//                     title: 'Okay'
-//                 },
-//                 {
-//                     action: 'cancel',
-//                     title: 'Cancel'
-//                 }
-//             ]
-//         };
-
-//         navigator.serviceWorker.ready
-//             .then(function (swreg) {
-//                 swreg.showNotification('Successfully subscribed!', options);
-//             });
-//     }
-// }
-
-// function createSub() {
-//     // Create a new subscription
-//     var sub = checkForSub();
-//     if(sub === null){
-//         return reg.pushManager.subscribe({
-//             userVisibleOnly: true,
-//             applicationServerKey: convertedVapidPublicKey
-//         })
-//         .then(function (newSub) {
-//             return fetch('https://whiteflagmobile.firebaseio.com/subscriptions.json', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     'Accept': 'application/json'
-//                 },
-//                 body: JSON.stringify(newSub)
-//             })
-//         })
-//         .then(function (res) {
-//             if (res.ok) {
-//                 displayConfirmNotification();
-//             }
-//         })
-//         .catch(function (err) {
-//             console.log(err);
-//         });
-//     }else{
-//         console.log(sub);
-//     }
-// }
-
-// function urlBase64ToUint8Array(base64String) {
-//     const padding = '='.repeat((4 - base64String.length % 4) % 4);
-//     const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-//     const rawData = window.atob(base64);
-//     const outputArray = new Uint8Array(rawData.length);
-//     for (let i = 0; i < rawData.length; ++i) {
-//         outputArray[i] = rawData.charCodeAt(i);
-//     }
-//     return outputArray;
-// }
-
-// function askForNotificationPermission() {
-//     Notification.requestPermission(function (result) {
-//         console.log('User Choice', result);
-//         if (result !== 'granted') {
-//             console.log('No notification permission granted!');
-//         } else {
-//             createSub();
-//         }
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('/sw.js', {
+//         scope: '.' // <--- THIS BIT IS REQUIRED
+//     }).then(function(registration) {
+//         // Registration was successful
+//         console.log('ServiceWorker registration successful with scope: ', registration.scope);
+//     }, function(err) {
+//         // registration failed :(
+//         console.log('ServiceWorker registration failed: ', err);
 //     });
 // }
 
-// function checkForSub() {
-//     if (!('serviceWorker' in navigator)) {
-//         return;
-//     }
-//     var reg;
-//     navigator.serviceWorker.ready
-//         .then(function (swreg) {
-//             reg = swreg;
-//             return swreg.pushManager.getSubscription();
-//         })
-//         .then(function (sub) {
-//             return sub;
-//         })
+// window.addEventListener('beforeinstallprompt', function (e) {
+//     console.log('beforeinstallprompt fired');
+//     e.prompt();
+//     return false;
+// });
 
-// }
-
-// function updateButton(sub){
-//     if (sub === null) {
-//         console.log('no sub found, init setup to create one');
-//         // activates enable notification button
-        
-//         if (enableNotificationsButtons) {
-//             for (let i = 0; i < enableNotificationsButtons.length; i++) {
-//                 enableNotificationsButtons[i].addEventListener('click', askForNotificationPermission);
-//                 enableNotificationsButtons[i].style.display = 'inline-block';
+// var btnInstallToHomeScreen = document.getElementById('btnInstallToHomeScreen');
+// if(btnInstallToHomeScreen){
+//     btnInstallToHomeScreen.addEventListener('click',function(e){
+//         btnInstallToHomeScreen.style.display = 'none';
+//         deferredPrompt.prompt();
+//         deferredPrompt.userChoice
+//         .then((choiceResult) => {
+//             if(choiceResult.outcome === 'accepted'){
+//                 console.log('User accepted the A2HS prompt');
+//             }else{
+//                 console.log('User did NOT accept A2HS.');
 //             }
-//         }
-//     } else {
-//         // We have a subscription
-//         console.log('sub exists, so disable button');
-//         // deactivates erable notification button, if any
-//         if (enableNotificationsButtons) {
-//             for (let i = 0; i < enableNotificationsButtons.length; i++) {
-//                 const thisButton = enableNotificationsButtons[i];
-//                 thisButton.disabled = true;
-//                 thisButton.innerHTML = 'Updates are enabled';
-//             }
-//             var disableMessage = document.getElementById('disable-message');
-//             disableMessage.style.display = 'inline-block';
-//         }
-//     }
+//             deferredPrompt = null;
+//         });
+//     });
 // }
 
+// window.addEventListener('appinstalled',(evt) => {
+//     app.logEvent('a2hs','installed');
+// });
 
-// init
-// if ('Notification' in window && 'serviceWorker' in navigator) {
-//     var sub = checkForSub();
-//     updateButton(sub);
-// }
+
+var deferredPrompt;
+var enableNotificationsButtons = document.querySelectorAll('.enable-notifications');
+
+if (!window.Promise) {
+  window.Promise = Promise;
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/sw.js')
+    .then(function () {
+      console.log('Service worker registered!');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
+window.addEventListener('beforeinstallprompt', function(event) {
+  console.log('beforeinstallprompt fired');
+  event.preventDefault();
+  deferredPrompt = event;
+  return false;
+});
+
+function displayConfirmNotification() {
+  if ('serviceWorker' in navigator) {
+    var options = {
+      body: 'You successfully subscribed to our Notification service!',
+      icon: '/src/images/icons/app-icon-96x96.png',
+      image: '/src/images/sf-boat.jpg',
+      dir: 'ltr',
+      lang: 'en-US', // BCP 47,
+      vibrate: [100, 50, 200],
+      badge: '/src/images/icons/app-icon-96x96.png',
+      tag: 'confirm-notification',
+      renotify: true,
+      actions: [
+        { action: 'confirm', title: 'Okay', icon: '/src/images/icons/app-icon-96x96.png' },
+        { action: 'cancel', title: 'Cancel', icon: '/src/images/icons/app-icon-96x96.png' }
+      ]
+    };
+
+    navigator.serviceWorker.ready
+      .then(function(swreg) {
+        swreg.showNotification('Successfully subscribed!', options);
+      });
+  }
+}
+
+function configurePushSub() {
+  if (!('serviceWorker' in navigator)) {
+    return;
+  }
+
+  var reg;
+  navigator.serviceWorker.ready
+    .then(function(swreg) {
+      reg = swreg;
+      return swreg.pushManager.getSubscription();
+    })
+    .then(function(sub) {
+        console.log('sub: ',sub);
+      if (sub === null) {
+        // Create a new subscription
+        var vapidPublicKey = 'BC1qaKiOtzHYJ_1ZC0pODkVDMuwa-8VHkxNawBvVKBRDkrauLrb0B9Lj5u9TiBm9HjJYo-io_MWSSSn2fii3YW4';
+        var convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey);
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidPublicKey
+        });
+      } else {
+        // We have a subscription
+        console.log('existing sub');
+        return 'exists';
+      }
+    })
+    .then(function(newSub) {
+        if(newSub!=='exists'){
+            return fetch('http://localhost:8080/api/push/sub', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify(newSub)
+            })
+        }else{
+            return 'exists';
+        }
+    })
+    .then(function(res) {
+      if (res!=='exists' && res.ok) {
+        displayConfirmNotification();
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
+function askForNotificationPermission() {
+  Notification.requestPermission(function(result) {
+    console.log('User Choice', result);
+    if (result !== 'granted') {
+      console.log('No notification permission granted!');
+    } else {
+      configurePushSub();
+      // displayConfirmNotification();
+    }
+  });
+}
+
+function urlBase64ToUint8Array(base64String) {
+  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+
+  var rawData = window.atob(base64);
+  var outputArray = new Uint8Array(rawData.length);
+
+  for (var i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+if ('Notification' in window && 'serviceWorker' in navigator) {
+  for (var i = 0; i < enableNotificationsButtons.length; i++) {
+    enableNotificationsButtons[i].style.display = 'inline-block';
+    enableNotificationsButtons[i].addEventListener('click', askForNotificationPermission);
+  }
+}

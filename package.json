@@ -1,28 +1,25 @@
 {
   "name": "whiteflag-ng",
   "private": true,
-  "version": "0.0.0",
-  "description": "White Flag Calvary PWA",
+  "version": "1.0.0",
+  "description": "White Flag Calvary Mobile",
   "repository": "https://github.com/rncrtr/whiteflag-ng",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^0.11.1",
-    "workbox-build": "^3.2.0",
-    "workbox-cli": "^3.2.0"
+    "http-server": "^0.11.1"
   },
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "firebase": "^5.0.4",
-    "method-override": "^2.3.10",
-    "morgan": "^1.2.3"
+    "firebase-admin": "^5.12.1",
+    "firebase-functions": "^1.1.0",
+    "web-push": "^3.3.2"
   },
   "scripts": {
     "update-deps": "npm update",
     "starthttp": "http-server -a localhost -p 8080 -c-1 ./app",
     "start": "node server.js",
-    "gensw": "workbox injectManifest app/workbox-config.js"
+    "web-push":"web-push"
   }
 }

@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('whiteflag', [
   'ngRoute',
+  'firebase',
   'whiteflag.home',
   'whiteflag.studies',
   'whiteflag.devotions',
@@ -21,7 +22,10 @@ angular.module('whiteflag', [
   'navMenu'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+  $locationProvider.html5Mode(true);
 
   $routeProvider.otherwise({redirectTo: '/home'});
+}])
+.controller('app',['$scope','DataService', function ($scope,DataService) {
+
 }]);

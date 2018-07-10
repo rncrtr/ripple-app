@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="whiteflag" class="no-js">
 <head>
+  <base href="/">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>White Flag Calvary</title>
   <meta name="description" content="">
   <meta name="theme-color" content="#333333">
-  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIldoaXRlIEZsYWcgQ2FsdmFyeSIsCiAgInNob3J0X25hbWUiOiJXaGl0ZUZsYWdNb2JpbGUiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJodHRwOi8vbG9jYWxob3N0OjgwODAvYXNzZXRzL2ltYWdlcy9hcHAtaWNvbjQ4LnBuZyIsCiAgICAgICJzaXplcyI6ICI0OHg0OCIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJkZW5zaXR5IjogMS4wCiAgICB9LAogICAgewogICAgICAic3JjIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hc3NldHMvaW1hZ2VzL2FwcC1pY29uNzIucG5nIiwKICAgICAgInNpemVzIjogIjcyeDcyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgImRlbnNpdHkiOiAxLjUKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2Fzc2V0cy9pbWFnZXMvYXBwLWljb245Ni5wbmciLAogICAgICAic2l6ZXMiOiAiOTZ4OTYiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgICAiZGVuc2l0eSI6IDIuMAogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJodHRwOi8vbG9jYWxob3N0OjgwODAvYXNzZXRzL2ltYWdlcy9hcHAtaWNvbjE0NC5wbmciLAogICAgICAic2l6ZXMiOiAiMTQ0eDE0NCIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIsCiAgICAgICJkZW5zaXR5IjogMy4wCiAgICB9LAogICAgewogICAgICAic3JjIjogImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9hc3NldHMvaW1hZ2VzL2FwcC1pY29uMTkyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIiwKICAgICAgImRlbnNpdHkiOiA0LjAKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2Fzc2V0cy9pbWFnZXMvYXBwLWljb241MTIucG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciLAogICAgICAiZGVuc2l0eSI6IDUuMAogICAgfQogIF0sCiAgInN0YXJ0X3VybCI6ICJodHRwOi8vbG9jYWxob3N0OjgwODAvIyEvaG9tZSIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI0ZGRkZGRiIsCiAgInRoZW1lX2NvbG9yIjoiIzMzMzMzMyIsCiAgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwKICAiZ2NtX3NlbmRlcl9pZCI6ICIxMDM5NTM4MDA1MDciCn0=" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,15 +15,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-  <script>
-    var OneSignal = window.OneSignal || [];
-    OneSignal.push(function() {
-      OneSignal.init({
-        appId: "a65196aa-b7ab-4431-afbe-b190522baa9a",
-      });
-    });
-  </script>
 </head>
 <body id="body">
   <div class="container" style="margin: 0px; padding: 0px;">
@@ -32,8 +24,13 @@
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
     <div class="col">
       <h4>Settings</h4>
-      <div class="col">
-        
+      <div class="col-sm-12">
+        <button class="enable-notifications">Enable Notifications</button>
+        <!--
+        <div class="js-subscription-json"></div>
+        <div class="js-subscription-details"></div>
+        -->
+        <button class="send-notification" ng-click="sendPN()">Send PN</button>
       </div>
     </div>
   </div>
@@ -41,15 +38,19 @@
   <script type="text/ng-template" id="home.html">
     <div class="page">
         <div>
+            <img src="assets/images/renewal-banner.jpg" width="100%" />
+            <!--
             <video controls id="welcome_video"
-            src="assets/videos/wfc-welcome-video.mp4"
-            poster="assets/images/welcome-video-still.jpg" width="100%" height="205">
+            src="assets/videos/wfc-welcome-video.mp4" width="100%" height="205">
             Sorry, your browser doesn't support embedded videos, 
             but don't worry, you can <a href="assets/videos/wfc-welcome-video.mp4">download it</a> 
             and watch it with your favorite video player!
             </video>
+            -->
         </div>
-        <!--<button type="button" class="btn btn-primary btn-block" id="btnInstallToHomeScreen" name="btnInstallToHomeScreen">Install App</button>-->
+        <!--
+        <button class="btn btn-primary btn-block" id="btnInstallToHomeScreen" name="btnInstallToHomeScreen" style="position: relative; z-index: 9999; border-radius: 0px;">Install App</button>
+        -->
         <ul class="list-group home-menu">
             <li class="list-group-item" ng-repeat="mi in menuItems">
                 <a href="{{mi.url}}">
@@ -61,17 +62,22 @@
     </div>
   </script>
 <!--/HOME-->
-<!--NEWS-->
+<!--ANNOUCEMENTS-->
   <script type="text/ng-template" id="news.html">
     <div class="page">
         <goback></goback>
         <div class="col">
             <h3>Announcements</h3>
-                
+            <div ng-repeat="ann in anns" class="card card-block gray-bg" style="padding: 5px 10px;">
+              <h4 class="size-medium">{{ann.title}}</h4>
+              <span>{{ann.desc}}</span>
+              <span class="text-left small gray" ng-show="ann.ts">{{ann.ts | timeago}}</span>
+              <span class="text-right" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</span>
+            </div>
         </div>
     </div>
   </script>
-<!--/NEWS-->
+<!--/ANNOUNCEMENTS-->
 <!--STUDIES-->
   <script type="text/ng-template" id="studies.html">
     <div class="page" ng-controller="StudiesCtrl">
@@ -82,8 +88,8 @@
             <h3>Studies</h3>
         </div>
         <ul class="list-group" >
-            <li class="list-group-item" ng-repeat="mi in menuItems">
-             <a ng-click="setStudy(mi.name)">
+            <li class="list-group-item" ng-repeat="mi in menuItems" ng-click="setStudy(mi.name)">
+             <a>
                 {{mi.name}}
                 <i class="fas fa-fw fa-chevron-right"></i>
              </a>
@@ -110,7 +116,7 @@
       <goback></goback>
         <div class="col">
           <h3>Devotions</h3>
-            <iframe id="devos" src="http://whiteflagcalvary.org/devotions" scrolling="no" frameborder="0" width="100%" height="1800px"></iframe>
+            <iframe id="devos" src="https://ripplemissions.com/api/devotions.php" scrolling="yes" frameborder="0" width="100%" height="2000px"></iframe>
           <div class="text-center">
               <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
           </div>
@@ -908,10 +914,10 @@
     </div>
   </script>
   <script type="text/ng-template" id="settadm.html">
-    <div class="page">
+    <div class="page" ng-controller="SettAdmCtrl">
         <goback></goback>
         <div class="col">
-            <div id="login-form">
+            <div id="login-form" style="display: none;">
                 <h3>Login</h3>
                 <table width="100%">
                     <tr>
@@ -936,12 +942,56 @@
                     </tr>
                 </table>
             </div>
+            <div class="loader text-center">
+              <img src="assets/images/loader.gif" />
+            </div>
             <div id="loggedin-only" style="display: none;">
-                <h3>Pastor's Eyes Only</h3>
-                <small>Push Notification to send:</small>
-                <textarea type="text" rows="3" class="form-control"></textarea>
-                <button ng-click="sendPushMessage()" class="btn btn-primary btn-block">Send Now</button>
-                <button class="btn btn-link logoutUser">Logout</button>
+              <div style="position: absolute; right: 10px; top: -40px;"><button class="btn btn-link btn-sm logoutUser">Logout</button></div>
+            <!--ANN ADMIN-->
+              <h4 class="text-medium">Announcements:</h4>
+              <button class="btn btn-link btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add Announcement</button>
+              <div ng-show="addAnnExpanded">
+                <!--<label for="title">Title:</label><br />-->
+                <input id="title" type="text" ng-model="newAnn.title" class="form-control" placeholder="Title" required /><br />
+                <!--<label for="desc">Description:</label><br />-->
+                <textarea id="desc" ng-model="newAnn.desc" type="text" rows="3" class="form-control" required placeholder="Description"></textarea><br />
+                <!--<label for="author">Author:</label><br />-->
+                <input id="author" type="text" ng-model="newAnn.author" class="form-control" placeholder="Author" /><br />
+                <i class="far fa-comment"></i>&nbsp;Notify via Push Message?&nbsp;
+                <label class="switch" ng-show="!editId">
+                  <input type="checkbox" ng-model="newAnn.pushNotify" />
+                  <span class="slider round"></span>
+                </label>
+                <br />
+                <i class="fas fa-check"></i>&nbsp;Publish to Announcements Page?&nbsp;
+                <label class="switch">
+                  <input type="checkbox" ng-model="newAnn.publishAnn" />
+                  <span class="slider round"></span>
+                </label>
+                <br /><br />
+                <button ng-click="addNewAnn()" class="btn btn-primary btn-block" ng-show="!editId">Save</button>
+                <button ng-click="updateNewAnn()" class="btn btn-primary btn-block" ng-show="editId">Update</button>
+                <br /><br />
+              </div>
+            <!--ANN LIST-->
+            <br />  
+            <strong>Published:</strong>
+              <div ng-show="!adminAnns">There are no announcements right now.</div>
+              <div ng-repeat="ann in adminAnns | orderBy:'ord'" class="card card-block gray-bg" style="padding: 5px 10px;" ng-show="adminAnns">
+                <h4 class="size-medium">{{ann.title}}</h4>
+                <span>{{ann.desc}}</span>
+                <div class="row">
+                  <div class="text-left small gray col-6" ng-show="ann.ts">{{ann.ts | timeago}}</div>
+                  <div class="text-right col-6" style="text-align: right;" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</div>
+                </div>
+                <div class="text-left">
+                  <button class="btn btn-sm" ng-click="editAnn(ann.id)"><i class="fas fa-edit"></i>&nbsp;Edit</button>
+                  <button class="btn btn-sm" ng-click="delAnn(ann.id)"><i class="fas fa-times"></i>&nbsp;Delete</button>
+                  <button class="btn btn-sm" ng-click="moveUp(ann.id,ann.ord)"><i class="fas fa-arrow-up"></i>&nbsp;Up</button>
+                  <button class="btn btn-sm" ng-click="moveDown(ann.id,ann.ord)"><i class="fas fa-arrow-down"></i>&nbsp;Down</button>
+                </div>
+              </div>
+              <br />
             </div>
         </div>
     </div>
@@ -959,10 +1009,14 @@
       messagingSenderId: "636514957068"
     };
     firebase.initializeApp(config);
-
+    const firestore = firebase.firestore();
+    const settings = {/* your settings... */ timestampsInSnapshots: true};
+    firestore.settings(settings);
+    const messaging = firebase.messaging();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="jquery.fn.js"></script>
   <script src="app.js"></script>

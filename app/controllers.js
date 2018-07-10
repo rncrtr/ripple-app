@@ -6,7 +6,7 @@ angular.module('goback', []).directive('goback', function() {
     template: 
       '<ul class="list-group">'+
           '<li class="list-group-item no-border">'+
-              '<a href="javascript:history.back();">'+
+              '<a href="/home">'+
                   '<span class="fas fa-fw fa-chevron-left text-left"></span>'+
                   '<span>Back</span>'+
               '</a>'+
@@ -20,23 +20,94 @@ angular.module('navMenu', []).directive('navMenu', function() {
     template: 
       '<ul id="wfc-menu" class="nav col-12-sm nopad">'+
         '<li class="nav-item col-2-sm">'+
-          '<a class="nav-link text-white" href="#!/home">Home</a>'+
+          '<a class="nav-link text-white" href="/home">Home</a>'+
         '</li>'+
         '<li class="nav-item col-2-sm">'+
-          '<a class="nav-link text-white" href="#!/studies">Studies</a>'+
+          '<a class="nav-link text-white" href="/studies">Studies</a>'+
         '</li>'+
         '<li class="nav-item col-2-sm">'+
-          '<a class="nav-link text-white" href="#!/devotions">Devotions</a>'+
+          '<a class="nav-link text-white" href="/devotions">Devotions</a>'+
         '</li>'+
         '<li class="nav-item col-2-sm">'+
-          '<a class="nav-link text-white" href="#!/prayer">Prayer</a>'+
+          '<a class="nav-link text-white" href="/prayer">Prayer</a>'+
         '</li>'+
-        '<li style="display: none; position: absolute; right: 0px; padding-right: 20px; padding-top: 10px; float: right; text-align: right; height: 43px; width: 50px;" class="menu-drop nav-item">' +
-          '<a class="text-white" style="" href=""><i class="fas fa-fw fa-bars" style="font-size: 16px;"></i></a>' +
+        '<li style="display: inline; position: absolute; right: 0px; padding-right: 20px; padding-top: 10px; float: right; text-align: right; height: 43px; width: 50px; z-index: 99999;" class="nav-item">' +
+          '<a class="text-white menu-drop" style="" href=""><i class="fas fa-fw fa-bars" style="font-size: 16px;"></i></a>' +
         '</li>' +
       '</ul>'
   };
 });
+
+
+//////////////////////////////////////////////////
+// DATA SERVICE
+angular.module('whiteflag').factory('DataService',['$http',function($http){
+  return {
+    getList: getList,
+    addDoc: addDoc,
+    updateDoc: updateDoc,
+    deleteDoc: deleteDoc,
+    reorder: reorder,
+    sendpn: sendpn
+  }
+
+  function getList(coll){
+    return $http.get('http://localhost:8080/api/'+coll,{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function addDoc(coll,data){
+    return $http.post('http://localhost:8080/api/'+coll+'/add',{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function updateDoc(coll,id,data){
+    return $http.put('http://localhost:8080/api/'+coll+'/'+id,{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function deleteDoc(coll,id){
+    return $http.delete('http://localhost:8080/api/'+coll+'/'+id,{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function reorder(coll,id,ord){
+    return $http.post('http://localhost:8080/api/'+coll+'/'+id+'/reorder',{"data": ord},{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function sendpn(msgOptions){
+    return $http.post('http://localhost:8080/api/push/sendpn',{"data": msgOptions},{"Content-Type":"application/json"}).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+}]);
+
+/////////////////////////////////////////////////
 
 // HOME
 angular.module('whiteflag.home', [])
@@ -51,43 +122,25 @@ angular.module('whiteflag.home', [])
 .controller('HomeCtrl', ['$scope', function ($scope) {
     $scope.topBanner = null;
     $scope.menuItems = [
-      { icon: 'fas fa-fw fa-book-open', name: 'Today\'s Devotion', url: '#!/devotions' },
-      { icon: 'fas fa-fw fa-bullhorn', name: 'Announcements', url: '#!/news'},
-      { icon: 'far fa-fw fa-clock', name: 'Services & Contact Info', url: '#!/services'},
+      { icon: 'fas fa-fw fa-book-open', name: 'Today\'s Devotion', url: '/devotions' },
+      { icon: 'fas fa-fw fa-bullhorn', name: 'Announcements', url: '/news'},
+      { icon: 'far fa-fw fa-clock', name: 'Services & Contact Info', url: '/services'},
       { icon: 'far fa-fw fa-map', name: 'Map', url:'https://www.google.com/maps/place/4625+E+Iowa+Ave,+Denver,+CO+80222/@39.6836303,-104.9332396,15z/data=!4m7!1m4!3m3!1s0x876c7dde82eac263:0x2912172574625955!2s4625+E+Iowa+Ave,+Denver,+CO+80222!3b1!3m1!1s0x876c7dde82eac263:0x2912172574625955',ext: true},
-      { icon: 'far fa-fw fa-play-circle', name: 'Studies', url:'#!/studies'},
-      { icon: 'far fa-fw fa-paper-plane', name: 'Prayer Requests', url: '#!/prayer' },
-      { icon: 'fas fa-fw fa-globe', name: 'Missions', url: '#!/missions' },
-      { icon: 'fas fa-fw fa-receipt', name: 'Giving', url:'#!/giving'},
-      { icon: 'fas fa-fw fa-heart', name: 'Love Abounds Food Bank', url:'#!/foodbank'},
-      { icon: 'fas fa-fw fa-book', name: 'Discipleship', url:'#!/discipleship'},
-      { icon: 'fas fa-fw fa-chalkboard-teacher', name: 'Resources', url: '#!/resources' },
+      { icon: 'far fa-fw fa-play-circle', name: 'Studies', url:'/studies'},
+      { icon: 'far fa-fw fa-paper-plane', name: 'Prayer Requests', url: '/prayer' },
+      { icon: 'fas fa-fw fa-globe', name: 'Missions', url: '/missions' },
+      { icon: 'fas fa-fw fa-receipt', name: 'Giving', url:'/giving'},
+      { icon: 'fas fa-fw fa-heart', name: 'Love Abounds Food Bank', url:'/foodbank'},
+      { icon: 'fas fa-fw fa-book', name: 'Discipleship', url:'/discipleship'},
+      { icon: 'fas fa-fw fa-chalkboard-teacher', name: 'Resources', url: '/resources' },
       { icon: 'fab fa-fw fa-youtube', name: 'YouTube Videos', url:'https://m.youtube.com/channel/UCNum-_XTF3mmxVUzVRHki8Q',ext: true},
       { icon: 'fab fa-fw fa-facebook', name: 'Facebook Page', url:'https://m.facebook.com/whiteflagcalvary',ext: true},
-      { icon: 'fas fa-fw fa-info', name: 'About The App', url:'#!/about'}
+      { icon: 'fas fa-fw fa-info', name: 'About The App', url:'/about'}
     ];
-    
-    // var v = document.getElementById('welcome_video');
-    // v.addEventListener(
-    //    'play', 
-    //       function() { 
-    //          v.play();
-    //       }, 
-    //     false);
-
-    // v.onclick = function() {
-    //   if (v.paused) {
-    //     v.play();
-    //     v.controls=null;
-    //   } else {
-    //     v.pause();
-    //     v.controls="controls";
-    //   }
-    // };
 
 }]);
 
-// NEWS
+// NEWS/ANNOUNCEMENTS
 //////////////////////////////////////////////////////////
 angular.module('whiteflag.news', [])
 
@@ -95,8 +148,15 @@ angular.module('whiteflag.news', [])
   $routeProvider.when('/news', { templateUrl: 'news.html', controller: 'NewsCtrl' });
 }])
 
-.controller('NewsCtrl', [function () {
-
+.controller('NewsCtrl', ['$scope','$http','DataService',function ($scope,$http,DataService) {
+    //console.log('news controller');
+    DataService.getList('anns').then(function(resp){
+      $scope.anns = resp.filter(function(){
+        if(ann.publish===true){
+          return ann;
+        }
+      });
+    });
 }]);
 
 // STUDIES
@@ -161,9 +221,10 @@ angular.module('whiteflag.devotions', [])
 
 .controller('DevotionsCtrl', ['$scope',function($scope) {
   
-    if(window.location.hash.indexOf('devotions')!=-1) {
-      var url = 'http://livinginchrist.org/wp-content/media/dbdbg/dbdbg.php';
-    }  
+    // if(window.location.hash.indexOf('devotions')!=-1) {
+    //   var url = 'http://livinginchrist.org/wp-content/media/dbdbg/dbdbg.php';
+    //   $('#devos').attr('src',url);
+    // }  
 }]);
 
 // PRAYER
@@ -179,15 +240,14 @@ angular.module('whiteflag.prayer',[])
   $scope.blanks = [undefined,null,''];
   $scope.prayerError = false;
   $scope.prayerData = {
-    subject: '[White Flag Mobile] Prayer Request Submission',
-    to: 'me@rncrtr.in',
+    subject: 'White Flag Mobile: Prayer Request',
+    to: 'shawn@whiteflagcalvary.org',
     from: 'donotreply@whiteflagcalvary.org',
     html: ''
   };
   $scope.prayerConfig = {
     headers:{
-      'Content-Type':'application/json',
-      'Accepts':'application/json'
+      'Content-Type':'application/json'
     }
   };
 
@@ -217,7 +277,7 @@ angular.module('whiteflag.prayer',[])
     $scope.prayerData.html = $scope.prayerHtml;
     var prayerData = $scope.prayerData;
     var prayerConfig = $scope.prayerConfig;
-    $http.post('/api/sendmail',prayerData,prayerConfig)
+    $http.post('https://ripplemissions.org/api/sendmail',prayerData,prayerConfig)
     .then(function(resp){
       console.log(resp);
     });
@@ -444,8 +504,17 @@ angular.module('whiteflag.resources', [])
 //////////////////////////////////////////////////////////
 angular.module('whiteflag.settings', [])
 
-.controller('SettingsCtrl', ['$scope',function ($scope) {
-  
+.controller('SettingsCtrl', ['$scope','DataService',function ($scope,DataService) {
+  $scope.sendPN = function(){
+    var msgOptions = {
+      title: 'This is a call',
+      content: 'Hey oh, here comes a danger up in this club',
+      url: '/announcements'
+    }
+    DataService.sendpn(msgOptions).then(function(resp){
+      console.log(resp);
+    });
+  }
 }]);
 
 //SETTINGS ADMIN
@@ -453,12 +522,206 @@ angular.module('whiteflag.settings', [])
 angular.module('whiteflag.settAdm', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/settings/admin', {
+  $routeProvider.when('/admin', {
     templateUrl: 'settadm.html',
     controller: 'SettAdmCtrl'
   });
 }])
 
-.controller('SettAdmCtrl', ['$scope',function ($scope) {
+.controller('SettAdmCtrl', ['$scope','DataService',function ($scope,DataService) {
+  $scope.newAnn = [];
+  $scope.addAnnExpanded = false;
+  $scope.newAnn.pushNotify = true;
+  $scope.newAnn.publishAnn = true;
+  $scope.addNewAnn = function(){
+    // Add a second document with a generated ID.
+    if($scope.newAnn.title){
+      var title = $scope.newAnn.title;
+    }
+    if($scope.newAnn.desc){
+      var desc = $scope.newAnn.desc;
+    }
+    if($scope.newAnn.author){
+      var author = $scope.newAnn.author;
+    }
+    var ord = 0;
+    var ts = new Date();
+    var newAnn = {"title":title,"desc": desc,"author":author,"ts":ts,"ord":ord};
+    DataService.addDoc('anns',newAnn).then(function(resp){
+      console.log(resp);
+      getAdminAnns();
+    },function(err){
+      console.log(err);
+    });
+  }
 
-}]);
+  $scope.delAnn = function(id){
+    DataService.deleteDoc('anns',id).then(function(resp){
+      getAdminAnns();
+    },function(err){
+      console.log(err);
+    });
+  };
+
+  $scope.editAnn = function(id){
+    //console.log($scope.adminAnns);
+    var newAnn = $scope.adminAnns.filter(function(item){
+      if(item.id == id){
+        return item;
+      }
+    });
+    $scope.newAnn = newAnn[0];
+    $scope.editId = newAnn[0].id;
+    //console.log($scope.newAnn,$scope.editId);
+  };
+
+  $scope.updateNewAnn = function(){
+    // Add a second document with a generated ID.
+    if($scope.newAnn.title){
+      var title = $scope.newAnn.title;
+    }
+    if($scope.newAnn.desc){
+      var desc = $scope.newAnn.desc;
+    }
+    if($scope.newAnn.author){
+      var author = $scope.newAnn.author;
+    }
+    if($scope.newAnn.publishAnn){
+      var publish = $scope.newAnn.publishAnn;
+    }
+    var ts = new Date();
+    var editAnn = {"title":title,"desc": desc,"author":author,publish: publish,"ts":ts};
+    DataService.updateDoc('anns',$scope.editId,editAnn).then(function(resp){
+      console.log(resp);
+      $scope.newAnn = null;
+      $scope.editId = null;
+      var msgOptions = {
+        title: title,
+        content: desc,
+        url: '/announcements'
+      }
+      pushNotify(msgOptions);
+      getAdminAnns();
+    },function(err){
+      console.log(err);
+    });
+  }
+
+  $scope.moveUp = function(id,ord){
+    var ts = new Date();
+    ord = parseInt(ord,10) - 1;
+    var ordData = {"ord":ord,"ts":ts};
+    DataService.reorder('anns',id,ordData).then(function(resp){
+      console.log(resp);
+      getAdminAnns();
+    });
+  }
+
+  $scope.moveDown = function(id,ord){
+    var ts = new Date();
+    ord = parseInt(ord) + 1;
+    var ordData = {"ord":ord,"ts":ts};
+    DataService.reorder('anns',id,ordData).then(function(resp){
+      console.log(resp);
+      getAdminAnns();
+    });
+  }
+
+  function getAdminAnns(){
+    DataService.getList('anns').then(function(resp){
+      $scope.adminAnns = resp.filter(function(ann){
+        if(ann.publish===true){
+          return ann;
+        }
+      });
+    });
+  };
+
+  function pushNotify(msgOptions){
+    DataService.sendpn(msgOptions).then(function(resp){
+      console.log(resp);
+    }).catch(function(err){
+      console.log(err);
+    });
+  }
+
+  $scope.toggle = function(togglbool){
+    if(togglbool==true){
+      togglbool = false;
+    }else{
+      togglbool = true;
+    }
+    return togglbool;
+  }
+
+  getAdminAnns();
+
+}])
+.filter('timeago', function() {
+        return function(input, p_allowFuture) {
+    
+            var substitute = function (stringOrFunction, number, strings) {
+                    var string = angular.isFunction(stringOrFunction) ? stringOrFunction(number, dateDifference) : stringOrFunction;
+                    var value = (strings.numbers && strings.numbers[number]) || number;
+                    return string.replace(/%d/i, value);
+                },
+                nowTime = (new Date()).getTime(),
+                date = (new Date(input)).getTime(),
+                //refreshMillis= 6e4, //A minute
+                allowFuture = p_allowFuture || false,
+                strings= {
+                    prefixAgo: '',
+                    prefixFromNow: '',
+                    suffixAgo: "ago",
+                    suffixFromNow: "from now",
+                    seconds: "less than a minute",
+                    minute: "about a minute",
+                    minutes: "%d minutes",
+                    hour: "about an hour",
+                    hours: "about %d hours",
+                    day: "a day",
+                    days: "%d days",
+                    month: "about a month",
+                    months: "%d months",
+                    year: "about a year",
+                    years: "%d years"
+                },
+                dateDifference = nowTime - date,
+                words,
+                seconds = Math.abs(dateDifference) / 1000,
+                minutes = seconds / 60,
+                hours = minutes / 60,
+                days = hours / 24,
+                years = days / 365,
+                separator = strings.wordSeparator === undefined ?  " " : strings.wordSeparator,
+            
+               
+                prefix = strings.prefixAgo,
+                suffix = strings.suffixAgo;
+                
+            if (allowFuture) {
+                if (dateDifference < 0) {
+                    prefix = strings.prefixFromNow;
+                    suffix = strings.suffixFromNow;
+                }
+            }
+
+            words = seconds < 45 && substitute(strings.seconds, Math.round(seconds), strings) ||
+            seconds < 90 && substitute(strings.minute, 1, strings) ||
+            minutes < 45 && substitute(strings.minutes, Math.round(minutes), strings) ||
+            minutes < 90 && substitute(strings.hour, 1, strings) ||
+            hours < 24 && substitute(strings.hours, Math.round(hours), strings) ||
+            hours < 42 && substitute(strings.day, 1, strings) ||
+            days < 30 && substitute(strings.days, Math.round(days), strings) ||
+            days < 45 && substitute(strings.month, 1, strings) ||
+            days < 365 && substitute(strings.months, Math.round(days / 30), strings) ||
+            years < 1.5 && substitute(strings.year, 1, strings) ||
+            substitute(strings.years, Math.round(years), strings);
+      //console.log(prefix+words+suffix+separator);
+      prefix.replace(/ /g, '')
+      words.replace(/ /g, '')
+      suffix.replace(/ /g, '')
+      return (prefix+' '+words+' '+suffix+' '+separator);
+            
+        };
+    });
