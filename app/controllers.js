@@ -42,6 +42,7 @@ angular.module('navMenu', []).directive('navMenu', function() {
 //////////////////////////////////////////////////
 // DATA SERVICE
 angular.module('whiteflag').factory('DataService',['$http',function($http){
+  const BASE_URL = 'https://ripplemissions.org/api/';
   return {
     getList: getList,
     addDoc: addDoc,
@@ -52,7 +53,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function getList(coll){
-    return $http.get('http://localhost:8080/api/'+coll,{"Content-Type":"application/json"}).then(function(resp){
+    return $http.get(BASE_URL+coll,{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -61,7 +62,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function addDoc(coll,data){
-    return $http.post('http://localhost:8080/api/'+coll+'/add',{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+coll+'/add',{"data": data},{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -70,7 +71,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function updateDoc(coll,id,data){
-    return $http.put('http://localhost:8080/api/'+coll+'/'+id,{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.put(BASE_URL+coll+'/'+id,{"data": data},{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -79,7 +80,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function deleteDoc(coll,id){
-    return $http.delete('http://localhost:8080/api/'+coll+'/'+id,{"Content-Type":"application/json"}).then(function(resp){
+    return $http.delete(BASE_URL+coll+'/'+id,{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -88,7 +89,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function reorder(coll,id,ord){
-    return $http.post('http://localhost:8080/api/'+coll+'/'+id+'/reorder',{"data": ord},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+coll+'/'+id+'/reorder',{"data": ord},{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -97,7 +98,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function sendpn(msgOptions){
-    return $http.post('http://localhost:8080/api/push/sendpn',{"data": msgOptions},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+'push/sendpn',{"data": msgOptions},{"Content-Type":"application/json"}).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -151,7 +152,7 @@ angular.module('whiteflag.news', [])
 .controller('NewsCtrl', ['$scope','$http','DataService',function ($scope,$http,DataService) {
     //console.log('news controller');
     DataService.getList('anns').then(function(resp){
-      $scope.anns = resp.filter(function(){
+      $scope.anns = resp.filter(function(ann){
         if(ann.publish===true){
           return ann;
         }
@@ -531,8 +532,9 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
 .controller('SettAdmCtrl', ['$scope','DataService',function ($scope,DataService) {
   $scope.newAnn = [];
   $scope.addAnnExpanded = false;
-  $scope.newAnn.pushNotify = true;
-  $scope.newAnn.publishAnn = true;
+  $scope.displayAnn = true;
+  $scope.newAnn.pushNotify = false;
+  $scope.newAnn.publishAnn = false;
   $scope.addNewAnn = function(){
     // Add a second document with a generated ID.
     if($scope.newAnn.title){
@@ -544,12 +546,30 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
     if($scope.newAnn.author){
       var author = $scope.newAnn.author;
     }
+    if($scope.newAnn.publishAnn){
+      var publish = $scope.newAnn.publishAnn;
+    }
+    if($scope.newAnn.pushNotify){
+      var pn = $scope.newAnn.pushNotify;
+    }
     var ord = 0;
     var ts = new Date();
-    var newAnn = {"title":title,"desc": desc,"author":author,"ts":ts,"ord":ord};
+    var newAnn = {"title":title,"desc": desc,"author":author,"publish": publish, "pushNotify": pn,"ts":ts,"ord":ord};
     DataService.addDoc('anns',newAnn).then(function(resp){
       console.log(resp);
+      
+      // Reload Page
       getAdminAnns();
+      getPushNotifications();
+
+      // Send Push msg
+      var msgOptions = {
+        title: title,
+        content: desc,
+        url: '/announcements'
+      }
+      $scope.addAnnExpanded = false;
+      sendPushNotify(msgOptions);
     },function(err){
       console.log(err);
     });
@@ -558,6 +578,7 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
   $scope.delAnn = function(id){
     DataService.deleteDoc('anns',id).then(function(resp){
       getAdminAnns();
+      getPushNotifications();
     },function(err){
       console.log(err);
     });
@@ -589,19 +610,18 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
     if($scope.newAnn.publishAnn){
       var publish = $scope.newAnn.publishAnn;
     }
+    if($scope.newAnn.pushNotify){
+      var pn = $scope.newAnn.pushNotify;
+    }
     var ts = new Date();
-    var editAnn = {"title":title,"desc": desc,"author":author,publish: publish,"ts":ts};
+    var editAnn = {"title":title,"desc": desc,"author":author,"publish": publish, "pushNotify": pn, "ts":ts};
     DataService.updateDoc('anns',$scope.editId,editAnn).then(function(resp){
       console.log(resp);
       $scope.newAnn = null;
       $scope.editId = null;
-      var msgOptions = {
-        title: title,
-        content: desc,
-        url: '/announcements'
-      }
-      pushNotify(msgOptions);
       getAdminAnns();
+      getPushNotifications();
+      $scope.addAnnExpanded = false;
     },function(err){
       console.log(err);
     });
@@ -614,6 +634,7 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
     DataService.reorder('anns',id,ordData).then(function(resp){
       console.log(resp);
       getAdminAnns();
+      getPushNotifications();
     });
   }
 
@@ -624,6 +645,7 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
     DataService.reorder('anns',id,ordData).then(function(resp){
       console.log(resp);
       getAdminAnns();
+      getPushNotifications();
     });
   }
 
@@ -637,7 +659,18 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
     });
   };
 
-  function pushNotify(msgOptions){
+  function getPushNotifications(){
+    DataService.getList('anns').then(function(resp){
+      $scope.adminPN = resp.filter(function(ann){
+        if(ann.pushNotify===true){
+          return ann;
+        }
+        console.log($scope.adminPN);
+      });
+    });
+  };
+
+  function sendPushNotify(msgOptions){
     DataService.sendpn(msgOptions).then(function(resp){
       console.log(resp);
     }).catch(function(err){
@@ -655,6 +688,7 @@ angular.module('whiteflag.settAdm', ['ngRoute'])
   }
 
   getAdminAnns();
+  getPushNotifications();
 
 }])
 .filter('timeago', function() {

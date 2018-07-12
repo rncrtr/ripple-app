@@ -6,27 +6,7 @@ $(document).ready(function () {
       $('#settings').slideToggle("slow");
   });
 
-  // setTimeout(function(){
-  //   var sub = $('.js-subscription-json').html();
-  //   sub = JSON.parse(sub);
-  //   console.log('SUB: ',sub);
-  //   var endpoint = sub.endpoint;
-  //   console.log(endpoint);
-  //   delete sub.expirationTime;
-  //   var headers = {
-  //     "Content-Type":"application/json",
-  //     "Authorization":"key=AIzaSyAE9TE6kDsX1N3zjX1ELf3lKjvjHD-wUmg"
-  //   };
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: 'https://iid.googleapis.com/v1/web/iid',
-  //     headers: headers,
-  //     data: JSON.stringify(sub),
-  //     success: function(data){
-  //       console.log(data);
-  //     }
-  //   });
-  // },1000);
+  $('.about').append('Version: '+window.version);
 
   $('button.loginUser').click(function(){
     $('.loader').show();

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "firebase-admin": "^5.12.1",
@@ -20,6 +21,6 @@
     "update-deps": "npm update",
     "starthttp": "http-server -a localhost -p 8080 -c-1 ./app",
     "start": "node server.js",
-    "web-push":"web-push"
+    "web-push": "web-push"
   }
 }

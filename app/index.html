@@ -15,6 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <script type="text/javascript">window.version = '0711181013';</script>
 </head>
 <body id="body">
   <div class="container" style="margin: 0px; padding: 0px;">
@@ -25,12 +26,9 @@
     <div class="col">
       <h4>Settings</h4>
       <div class="col-sm-12">
-        <button class="enable-notifications">Enable Notifications</button>
-        <!--
-        <div class="js-subscription-json"></div>
-        <div class="js-subscription-details"></div>
-        -->
-        <button class="send-notification" ng-click="sendPN()">Send PN</button>
+        Want to get notifications when things are happening at White Flag Calvary?<br /><br />
+        <button class="btn btn-small btn-primary btn-block enable-notifications">Enable Notifications</button>
+        <br /><br /><small>NOTE: You can disable notifications in your phone's application settings.</small>
       </div>
     </div>
   </div>
@@ -62,14 +60,17 @@
     </div>
   </script>
 <!--/HOME-->
-<!--ANNOUCEMENTS-->
+<!--ANNOUNCEMENTS-->
   <script type="text/ng-template" id="news.html">
     <div class="page">
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h3>Announcements</h3>
+          <br />
+            <h4>Announcements</h4>
+            <div ng-show="!anns" class="text-center"><img src="assets/images/loader.gif" /></div>
             <div ng-repeat="ann in anns" class="card card-block gray-bg" style="padding: 5px 10px;">
-              <h4 class="size-medium">{{ann.title}}</h4>
+              <strong class="size-medium">{{ann.title}}</strong>
               <span>{{ann.desc}}</span>
               <span class="text-left small gray" ng-show="ann.ts">{{ann.ts | timeago}}</span>
               <span class="text-right" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</span>
@@ -99,12 +100,10 @@
         <div ng-if="currentStudy">
             <ul class="list-group"><li class="list-group-item no-border"><a ng-click="setStudy(null)"><span class="fas fa-fw fa-chevron-left text-left"></span><span>Back</span></a></li></ul>
             <div class="sermonnet iframe-loader" style="width:500px;max-width:100%;">
-                    <iframe id="studyplayer" ng-src="{{setPlayerUrl(currentPlayer) | trustAsResourceUrl}}" name="sermon-frame" frameborder="0" width="100%" height="1000px" scrolling="yes" allowTransparency="true" allowfullscreen class="sermon-iframe">
-                        <a ng-href="{{setPlayerUrl(currentPlayer) | trustAsResourceUrl}}"><p>Your browser does not support iFrames, please click here to access our media center.</p></a> 
-                    </iframe>
-                    <!--<script>if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {var sf = document.getElementsByName("sermon-frame");sf[sf.length - 1].setAttribute("scrolling", "no");}</script>-->
-                    <!--<script type="text/javascript" src="https://whiteflagcalvary.sermon.net/static/common/js/iframe-resizer/iframeResizer.js"></script>-->
-                    <script type="text/javascript" src="https://whiteflagcalvary.sermon.net/ICampus/js/embeddedPlayerHelper.js"></script>
+              <iframe id="studyplayer" ng-src="{{setPlayerUrl(currentPlayer) | trustAsResourceUrl}}" name="sermon-frame" frameborder="0" width="100%" height="1000px" scrolling="yes" allowTransparency="true" allowfullscreen class="sermon-iframe">
+                  <a ng-href="{{setPlayerUrl(currentPlayer) | trustAsResourceUrl}}"><p>Your browser does not support iFrames, please click here to access our media center.</p></a> 
+              </iframe>
+              <script type="text/javascript" src="https://whiteflagcalvary.sermon.net/ICampus/js/embeddedPlayerHelper.js"></script>
             </div>
         </div>
     </div>
@@ -114,6 +113,7 @@
   <script type="text/ng-template" id="devotions.html">
     <div class="page" ng-controller="DevotionsCtrl">
       <goback></goback>
+      <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
           <h3>Devotions</h3>
             <iframe id="devos" src="https://ripplemissions.com/api/devotions.php" scrolling="yes" frameborder="0" width="100%" height="2000px"></iframe>
@@ -130,6 +130,7 @@
     <div class="page">
       <nav-menu></nav-menu>
       <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
           <h3>Prayer Requests</h3>
           How can we pray for you? Your information will not be shared with anyone but our elders/pastor to pray.<br /><br />
@@ -148,9 +149,6 @@
                 <br />
                 <button class="btn btn-primary btn-block" ng-click="prepPrayerRequest()">Send</button>  
             </div>
-          <!-- <div class="iframe-loader">
-              <iframe id="pr" src="https://whiteflagcalvary.org/prayer-request" scrolling="no" frameborder="0" width="100%" height="800px"></iframe>
-          </div> -->
           <div class="text-center"><br />
               <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
           </div>
@@ -163,17 +161,18 @@
   <script type="text/ng-template" id="about.html">
     <div class="page">
         <goback></goback>
-        <div class="col">
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
+        <div class="col about">
             <h3>About</h3>
+                <p>
                 White Flag Calvary is located in Denver, CO. <br />
-                <br />
-                Studies are sermons by Shawn Reinsel and others as noted. <br />
-                <br />
-                Devotions by Bob Hoekstra from the book Day by Day by Grace. More information here: <a class="link" href="http://livinginchrist.org/">Living in Christ Ministries</a> <br />
-                <br />
-                App Development by Ryan Carter
-                <br /> 
-                White Flag Calvary's app privacy policy is located <a class="link" href="http://whiteflagcalvary.org/privacy-policy">here on our website</a>.
+                </p>
+                <p>
+                Sermon series by Pastor Shawn Reinsel &mdash; and others &mdash; as noted. <br />
+                </p>
+                <p>Devotions by Bob Hoekstra from the book <em>Day by Day by Grace</em>. More information here: <a class="link" href="http://livinginchrist.org/">Living in Christ Ministries</a> </p>
+                <p>App Development donated by Ryan Carter at <a class="link" href="http://overthinkdev.com">OverthinkDev.com</a></p>
+                <p>Our privacy policy is located <a class="link" href="http://whiteflagcalvary.org/privacy-policy">on our website</a>.</p>
         </div>
     </div>
   </script>
@@ -949,8 +948,9 @@
               <div style="position: absolute; right: 10px; top: -40px;"><button class="btn btn-link btn-sm logoutUser">Logout</button></div>
             <!--ANN ADMIN-->
               <h4 class="text-medium">Announcements:</h4>
-              <button class="btn btn-link btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add Announcement</button>
+              <button class="btn btn-primary btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add New</button>
               <div ng-show="addAnnExpanded">
+              <br />
                 <!--<label for="title">Title:</label><br />-->
                 <input id="title" type="text" ng-model="newAnn.title" class="form-control" placeholder="Title" required /><br />
                 <!--<label for="desc">Description:</label><br />-->
@@ -963,7 +963,7 @@
                   <span class="slider round"></span>
                 </label>
                 <br />
-                <i class="fas fa-check"></i>&nbsp;Publish to Announcements Page?&nbsp;
+                <i class="fas fa-upload"></i>&nbsp;Publish to Announcements Page?&nbsp;
                 <label class="switch">
                   <input type="checkbox" ng-model="newAnn.publishAnn" />
                   <span class="slider round"></span>
@@ -971,15 +971,21 @@
                 <br /><br />
                 <button ng-click="addNewAnn()" class="btn btn-primary btn-block" ng-show="!editId">Save</button>
                 <button ng-click="updateNewAnn()" class="btn btn-primary btn-block" ng-show="editId">Update</button>
-                <br /><br />
+                <br />
               </div>
             <!--ANN LIST-->
-            <br />  
-            <strong>Published:</strong>
+            <br /> 
+            <ul class="nav nav-pills nav-justified" style="border-bottom: 1px solid gray;">
+              <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==true}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-bullhorn"></i>&nbsp;Announcements</a></li>
+              <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==false}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-comment"></i>&nbsp;Push Msgs</a></li>
+            </ul>
+            <div ng-show="displayAnn">
+            <br />
+              <h5>Published:</h5>
               <div ng-show="!adminAnns">There are no announcements right now.</div>
               <div ng-repeat="ann in adminAnns | orderBy:'ord'" class="card card-block gray-bg" style="padding: 5px 10px;" ng-show="adminAnns">
-                <h4 class="size-medium">{{ann.title}}</h4>
-                <span>{{ann.desc}}</span>
+                <strong>{{ann.title}}</strong>
+                <div>{{ann.desc}}</div>
                 <div class="row">
                   <div class="text-left small gray col-6" ng-show="ann.ts">{{ann.ts | timeago}}</div>
                   <div class="text-right col-6" style="text-align: right;" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</div>
@@ -993,11 +999,31 @@
               </div>
               <br />
             </div>
+            <!--PUSH NOTIFY-->
+            <div ng-show="!displayAnn">
+            <br />
+              <h5>Sent Notifications:</h5>
+              <div ng-show="!adminPN">There are no push notifications right now.</div>
+              <div ng-repeat="pn in adminPN | orderBy:'ts':true" class="nav-item" style="padding: 5px 10px;" ng-show="adminPN">
+              <hr />
+                <strong>{{pn.title}}</strong><br />
+                <div>{{pn.desc}}</div>
+                <div class="row">
+                  <div class="text-left small gray col-6" ng-show="pn.ts">{{pn.ts | timeago}}</div>
+                </div>
+              </div>
+              <br />
+            </div>
+          </div>
         </div>
     </div>
   </script>
 <!--/SETTINGS-->
-<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js"></script>
   <script>
     // Initialize Firebase
     var config = {
@@ -1016,7 +1042,6 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>
-  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="jquery.fn.js"></script>
   <script src="app.js"></script>

@@ -77,10 +77,9 @@ background-image: -o-linear-gradient(left, #ccc, #333, #ccc);
   background: #333;
   color: #FFFFFF;
   margin: 0px 0px 0px 20px;
-  font-size: 0.8em;
-  height: 600px;
+  height: 400px;
   width: 90%;
-  max-height: 90%;
+  max-height: 80%;
   border-radius: 0px 0px 7px 7px;
 }
 
@@ -150,3 +149,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* nav pills (tabs) */
+.nav-pills li a.active{color: #FFFFFF !important;}

@@ -3,7 +3,6 @@
 // Declare app level module which depends on views, and components
 angular.module('whiteflag', [
   'ngRoute',
-  'firebase',
   'whiteflag.home',
   'whiteflag.studies',
   'whiteflag.devotions',

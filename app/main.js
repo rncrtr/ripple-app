@@ -1,44 +1,3 @@
-// REGISTER SERVICE WORKER
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('/sw.js', {
-//         scope: '.' // <--- THIS BIT IS REQUIRED
-//     }).then(function(registration) {
-//         // Registration was successful
-//         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-//     }, function(err) {
-//         // registration failed :(
-//         console.log('ServiceWorker registration failed: ', err);
-//     });
-// }
-
-// window.addEventListener('beforeinstallprompt', function (e) {
-//     console.log('beforeinstallprompt fired');
-//     e.prompt();
-//     return false;
-// });
-
-// var btnInstallToHomeScreen = document.getElementById('btnInstallToHomeScreen');
-// if(btnInstallToHomeScreen){
-//     btnInstallToHomeScreen.addEventListener('click',function(e){
-//         btnInstallToHomeScreen.style.display = 'none';
-//         deferredPrompt.prompt();
-//         deferredPrompt.userChoice
-//         .then((choiceResult) => {
-//             if(choiceResult.outcome === 'accepted'){
-//                 console.log('User accepted the A2HS prompt');
-//             }else{
-//                 console.log('User did NOT accept A2HS.');
-//             }
-//             deferredPrompt = null;
-//         });
-//     });
-// }
-
-// window.addEventListener('appinstalled',(evt) => {
-//     app.logEvent('a2hs','installed');
-// });
-
-
 var deferredPrompt;
 var enableNotificationsButtons = document.querySelectorAll('.enable-notifications');
 
@@ -113,12 +72,16 @@ function configurePushSub() {
       } else {
         // We have a subscription
         console.log('existing sub');
+        for (var i = 0; i < enableNotificationsButtons.length; i++) {
+            enableNotificationsButtons[i].innerHTML = 'Already enabled!';
+            enableNotificationsButtons[i].disabled = true;
+          }
         return 'exists';
       }
     })
     .then(function(newSub) {
         if(newSub!=='exists'){
-            return fetch('http://localhost:8080/api/push/sub', {
+            return fetch('https://ripplemissions.org/api/push/sub', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -173,3 +136,5 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
     enableNotificationsButtons[i].addEventListener('click', askForNotificationPermission);
   }
 }
+
+//askForNotificationPermission();
