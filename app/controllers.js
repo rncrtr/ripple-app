@@ -42,7 +42,7 @@ angular.module('navMenu', []).directive('navMenu', function() {
 //////////////////////////////////////////////////
 // DATA SERVICE
 angular.module('whiteflag').factory('DataService',['$http',function($http){
-  const BASE_URL = 'https://ripplemissions.org/api/';
+  const BASE_URL = 'https://whiteflagmobile.com/api/';
   return {
     getList: getList,
     addDoc: addDoc,

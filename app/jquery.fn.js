@@ -4,7 +4,7 @@ $(document).ready(function () {
   $('.menu-drop').click(function(){
     //console.log('clicked');
       $('#settings').slideToggle("slow");
-  });
+  }); 
 
   $('.about').append('Version: '+window.version);
 
