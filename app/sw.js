@@ -24,15 +24,15 @@ var urlsToCache = [
 self.addEventListener('install', function(event) {
     // Perform install steps
     console.log('[Service Worker] Installing...');
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function(cache) {
-                console.log('Opened cache');
-                var x = cache.addAll(urlsToCache);
-                console.log('cache added');
-                return x;
-            })
-    );
+    // event.waitUntil(
+    //     caches.open(CACHE_NAME)
+    //         .then(function(cache) {
+    //             console.log('Opened cache');
+    //             var x = cache.addAll(urlsToCache);
+    //             console.log('cache added');
+    //             return x;
+    //         })
+    // );
 });
 
 self.addEventListener('activate',function(event){
@@ -41,16 +41,16 @@ self.addEventListener('activate',function(event){
 });
 
 self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.match(event.request)
-            .then(function(response) {
-                    // Cache hit - return response
-                    if (response) {
-                        return response;
-                    }
-                }
-            )
-    );
+    // event.respondWith(
+    //     caches.match(event.request)
+    //         .then(function(response) {
+    //                 // Cache hit - return response
+    //                 if (response) {
+    //                     return response;
+    //                 }
+    //             }
+    //         )
+    // );
 });
 
 self.addEventListener('notificationClick',function(event){
@@ -86,7 +86,7 @@ self.addEventListener('notificationClick',function(event){
 self.addEventListener('push',function(event){
     console.log('Push notification received',event);
 
-    var data = {title: 'Dummy',content: 'yeah, I am just dummy text',url:'/'};
+    var data = {title: 'Default Message',content: 'placeholder text',url:'/'};
     if(event.data){
         data = JSON.parse(event.data.text());
     }
