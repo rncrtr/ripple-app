@@ -1,4 +1,4 @@
-var version = '07-14-18-03-45';
+var version = '07-14-18-0831';
 var CACHE_NAME = 'whiteflag-'+version;
 var urlsToCache = [
     './?'+version,
