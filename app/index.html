@@ -25,10 +25,18 @@
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
     <div class="col">
       <h4>Settings</h4>
-      <div class="col-sm-12">
-        Want to get notifications when things are happening at White Flag Calvary?<br /><br />
-        <button class="btn btn-small btn-primary btn-block enable-notifications">Enable Notifications</button>
-        <br /><br /><small>NOTE: You can disable notifications in your phone's application settings.</small>
+      <div class="col-sm-12 nopad">
+        <b>Enable notifications?</b>
+        <label class="switch float-right" style="margin-top: 0px;">
+          <input type="checkbox" class="enable-notifications" />
+          <span class="slider round"></span>
+        </label>
+        <!--<button class="btn btn-sm btn-primary enable-notifications">Yes, enable</button>-->
+        <br /><p style="font-size: small">NOTE: You can disable notifications in your phone's application settings.</p>
+        <!--
+        <b>Install App to Homescreen?</b>
+        <button class="btn btn-sm btn-block btn-primary install-app">Install App</button>
+        -->
       </div>
     </div>
   </div>
@@ -46,9 +54,6 @@
             </video>
             -->
         </div>
-        <!--
-        <button class="btn btn-primary btn-block" id="btnInstallToHomeScreen" name="btnInstallToHomeScreen" style="position: relative; z-index: 9999; border-radius: 0px;">Install App</button>
-        -->
         <ul class="list-group home-menu">
             <li class="list-group-item" ng-repeat="mi in menuItems">
                 <a href="{{mi.url}}">

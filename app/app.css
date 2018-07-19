@@ -53,7 +53,7 @@ a{
   background:url(../assets/images/loader.gif) top center no-repeat;
 }
 .bold{font-weight: bold;}
-.nopad{padding-left: 0px; padding-right: 0px; }
+.nopad{padding-left: 0px !important; padding-right: 0px !important; }
 .pad5{padding-left: 5px; padding-right: 5px; }
 .v-top{vertical-align: top; padding-right: 3px;}
 .hidden{display: none;}
@@ -100,7 +100,7 @@ background-image: -o-linear-gradient(left, #ccc, #333, #ccc);
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {display:none !important;}
 
 /* The slider */
 .slider {

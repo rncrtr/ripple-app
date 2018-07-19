@@ -1,5 +1,6 @@
 var deferredPrompt;
 var enableNotificationsButtons = document.querySelectorAll('.enable-notifications');
+var installAppButtons = document.querySelectorAll('.install-app');
 
 if (!window.Promise) {
   window.Promise = Promise;
@@ -18,7 +19,7 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('beforeinstallprompt', function(event) {
   console.log('beforeinstallprompt fired');
-  event.preventDefault();
+  //event.preventDefault();
   deferredPrompt = event;
   return false;
 });
@@ -73,15 +74,16 @@ function configurePushSub() {
         // We have a subscription
         console.log('existing sub');
         for (var i = 0; i < enableNotificationsButtons.length; i++) {
-            enableNotificationsButtons[i].innerHTML = 'Already enabled!';
-            enableNotificationsButtons[i].disabled = true;
-          }
+          //enableNotificationsButtons[i].innerHTML = 'Already enabled!';
+          enableNotificationsButtons[i].checked = true;
+          enableNotificationsButtons[i].disabled = true;
+        }
         return 'exists';
       }
     })
     .then(function(newSub) {
         if(newSub!=='exists'){
-            return fetch('https://ripplemissions.org/api/push/sub', {
+            return fetch('https://whiteflagmobile.com/api/push/sub', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -115,6 +117,26 @@ function askForNotificationPermission() {
   });
 }
 
+function installAppToHomescreen(){
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice
+  .then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      deferredPrompt = null;
+    });
+}
+
+window.addEventListener('appinstalled', (evt) => {
+  for (var i = 0; i < installAppButtons.length; i++) {
+    installAppButtons[i].innerHTML = 'Already installed!';
+    installAppButtons[i].disabled = true;
+  }
+});
+
 function urlBase64ToUint8Array(base64String) {
   var padding = '='.repeat((4 - base64String.length % 4) % 4);
   var base64 = (base64String + padding)
@@ -137,4 +159,10 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
   }
 }
 
+if(deferredPrompt){
+  for (var i = 0; i < installAppButtons.length; i++) {
+    installAppButtons[i].addEventListener('click',installAppToHomescreen);
+  }
+}
+configurePushSub();
 //askForNotificationPermission();
