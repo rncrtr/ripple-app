@@ -21,7 +21,9 @@ window.addEventListener('beforeinstallprompt', function(event) {
   console.log('beforeinstallprompt fired');
   //event.preventDefault();
   deferredPrompt = event;
-  return false;
+  // for (var i = 0; i < installAppButtons.length; i++) {
+  //   installAppButtons[i].style.display = 'block';
+  // }
 });
 
 function displayConfirmNotification() {
@@ -133,7 +135,7 @@ function installAppToHomescreen(){
 window.addEventListener('appinstalled', (evt) => {
   for (var i = 0; i < installAppButtons.length; i++) {
     installAppButtons[i].innerHTML = 'Already installed!';
-    installAppButtons[i].disabled = true;
+    installAppButtons[i].style.display = 'none';
   }
 });
 
