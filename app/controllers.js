@@ -42,18 +42,21 @@ angular.module('navMenu', []).directive('navMenu', function() {
 //////////////////////////////////////////////////
 // DATA SERVICE
 angular.module('whiteflag').factory('DataService',['$http',function($http){
-  const BASE_URL = 'https://whiteflagmobile.com/api/';
+  var BASE_URL = 'https://whiteflagmobile.com/api/';
+  var config = {"Content-Type":"application/json"};
   return {
+    BASE_URL: BASE_URL,
     getList: getList,
     addDoc: addDoc,
     updateDoc: updateDoc,
     deleteDoc: deleteDoc,
     reorder: reorder,
-    sendpn: sendpn
+    sendpn: sendpn,
+    sendMail: sendMail
   }
 
   function getList(coll){
-    return $http.get(BASE_URL+coll,{"Content-Type":"application/json"}).then(function(resp){
+    return $http.get(BASE_URL+coll,config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -62,7 +65,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function addDoc(coll,data){
-    return $http.post(BASE_URL+coll+'/add',{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+coll+'/add',{"data": data},config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -71,7 +74,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function updateDoc(coll,id,data){
-    return $http.put(BASE_URL+coll+'/'+id,{"data": data},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.put(BASE_URL+coll+'/'+id,{"data": data},config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -80,7 +83,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function deleteDoc(coll,id){
-    return $http.delete(BASE_URL+coll+'/'+id,{"Content-Type":"application/json"}).then(function(resp){
+    return $http.delete(BASE_URL+coll+'/'+id,config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -89,7 +92,7 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function reorder(coll,id,ord){
-    return $http.post(BASE_URL+coll+'/'+id+'/reorder',{"data": ord},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+coll+'/'+id+'/reorder',{"data": ord},config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -98,7 +101,16 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
   }
 
   function sendpn(msgOptions){
-    return $http.post(BASE_URL+'push/sendpn',{"data": msgOptions},{"Content-Type":"application/json"}).then(function(resp){
+    return $http.post(BASE_URL+'push/sendpn',{"data": msgOptions},config).then(function(resp){
+      var respData = resp.data;
+      return respData;
+    },function(error){
+      console.log(coll+' ERROR:',error);
+    });
+  }
+
+  function sendMail(data){
+    return $http.post(BASE_URL+'sendmail',{data},config).then(function(resp){
       var respData = resp.data;
       return respData;
     },function(error){
@@ -236,22 +248,16 @@ angular.module('whiteflag.prayer',[])
   $routeProvider.when('/prayer', { templateUrl: 'prayer.html', controller: 'PrayerCtrl' });
 }])
 
-.controller('PrayerCtrl', ['$scope','$http', function($scope, $http) {
+.controller('PrayerCtrl', ['$scope','$http','DataService', function($scope, $http, DataService) {
   $scope.topBanner = null;
   $scope.blanks = [undefined,null,''];
   $scope.prayerError = false;
   $scope.prayerData = {
     subject: 'White Flag Mobile: Prayer Request',
-    to: 'shawn@whiteflagcalvary.org',
+    to: 'me@rncrtr.in',
     from: 'donotreply@whiteflagcalvary.org',
     html: ''
   };
-  $scope.prayerConfig = {
-    headers:{
-      'Content-Type':'application/json'
-    }
-  };
-
 
   $scope.prepPrayerRequest = function(){
     $scope.prayerHtml = '';
@@ -277,11 +283,12 @@ angular.module('whiteflag.prayer',[])
   $scope.sendPrayerRequest = function(){
     $scope.prayerData.html = $scope.prayerHtml;
     var prayerData = $scope.prayerData;
-    var prayerConfig = $scope.prayerConfig;
-    $http.post('https://ripplemissions.org/api/sendmail',prayerData,prayerConfig)
+    DataService.sendMail(prayerData)
     .then(function(resp){
       console.log(resp);
+      $scope.showResult = true;
     });
+
   }
 }]);
 
