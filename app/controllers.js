@@ -31,8 +31,8 @@ angular.module('navMenu', []).directive('navMenu', function() {
         '<li class="nav-item col-2-sm">'+
           '<a class="nav-link text-white" href="/prayer">Prayer</a>'+
         '</li>'+
-        '<li style="display: inline; position: absolute; right: 0px; padding-right: 20px; padding-top: 10px; float: right; text-align: right; height: 43px; width: 50px; z-index: 99999;" class="nav-item">' +
-          '<a class="text-white menu-drop" style="" href=""><i class="fas fa-fw fa-bars" style="font-size: 16px;"></i></a>' +
+        '<li class="hamburger" class="nav-item">' +
+          '<a class="text-white menu-drop" href=""><i class="fas fa-fw fa-bars"></i></a>' +
         '</li>' +
       '</ul>'
   };

@@ -58,7 +58,6 @@ $(document).ready(function () {
       // An error happened.
     });
   });
-
     
 // end jquery
 });

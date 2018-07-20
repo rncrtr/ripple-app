@@ -11,20 +11,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="app.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <link rel="stylesheet" href="app.css">
   <script type="text/javascript">window.version = '07-19-18-1052';</script>
 </head>
 <body id="body">
-  <div class="container" style="margin: 0px; padding: 0px;">
+  <div class="container-fluid" style="margin: 0px; padding: 0px;">
     <nav-menu></nav-menu>
     <div ng-view autoscroll></div>
   </div>
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
     <div class="col">
-      <h4>Settings</h4>
+      <div class="page-title">Settings</div>
       <div class="col-sm-12 nopad">
         <b>Enable notifications?</b>
         <label class="switch float-right" style="margin-top: 0px;">
@@ -71,7 +71,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h4>Announcements</h4>
+            <div class="page-title">Announcements</div>
             <div ng-show="!anns" class="text-center"><img src="assets/images/loader.gif" /></div>
             <div ng-repeat="ann in anns" class="card card-block gray-bg" style="padding: 5px 10px;">
               <strong class="size-medium">{{ann.title}}</strong>
@@ -90,7 +90,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h3>Studies</h3>
+            <div class="page-title">Studies</div>
         </div>
         <ul class="list-group" >
             <li class="list-group-item" ng-repeat="mi in menuItems" ng-click="setStudy(mi.name)">
@@ -119,7 +119,7 @@
       <goback></goback>
       <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-          <h3>Devotions</h3>
+          <div class="page-title">Devotions</div>
             <iframe id="devos" src="https://ripplemissions.com/api/devotions.php" scrolling="yes" frameborder="0" width="100%" height="2000px"></iframe>
           <div class="text-center">
               <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
@@ -136,7 +136,7 @@
       <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-          <h3>Prayer Requests</h3>
+          <div class="page-title">Prayer Requests</div>
             <div class="prayer-request">
                 <!--<label for="prayerName" class="bold">Name:</label>-->
                 <input type="text" id="prayerName" class="form-control" ng-model="prayerName" placeholder="Name" /><br />
@@ -165,7 +165,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col about">
-            <h3>About</h3>
+            <div class="page-title">About</div>
                 <p>
                 White Flag Calvary is located in Denver, CO. <br />
                 </p>
@@ -187,7 +187,7 @@
       <goback></goback>    
       <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h3>Services & Contact Info</h3>
+            <div class="page-title">Services & Contact Info</div>
             <br />
             <p>
             <b>Sunday Morning Service</b><br />
@@ -221,7 +221,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-        <h3>Missions</h3>
+        <div class="page-title">Missions</div>
         <p>
           We love our missionaries, who are serving the Lord (and others) faithfully in the US and abroad. 
           Feel free to connect with them directly and get involved in what God is doing around the world.<br /><br />Please pray for our partners in the field, consider supporting them if you can, and if nothing else, you could send them an encouraging word to let them know you're thinking of them.
@@ -267,7 +267,7 @@
     <hr /><br /><br />
     <div class="missions-section">
       <div class="missions-photo photo-img-png">
-        <img class="photo-img wp-image-1228 size-medium" src="assets/images/missions/fox.png" alt="fox" itemprop="image" height="223" width="100%">
+        <img src="assets/images/missions/fox.png" alt="fox" itemprop="image" width="100%">
       </div>
       <p>
         <b>
@@ -510,9 +510,11 @@
           <span style="font-weight: 400;">facebook.com/AftertheStorm4Christ</span>
         </a>
       </p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
     </div>
+    <div class="text-center">
+        <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
+    </div>
+    <br /><br />
   </script>
 <!--/MISSIONS-->
 <!--GIVING-->
@@ -521,7 +523,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h3>Giving</h3>
+            <div class="page-title">Giving</div>
             <p>
                 We give because of the grace that God has given us. The Bible describes this grace of giving as being:
             </p>
@@ -566,7 +568,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <h3>Love Abounds Food Bank</h3>
+            <div class="page-title">Love Abounds Food Bank</div>
             <p class="text-center">
                 <br />
                 <b>
@@ -604,25 +606,25 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-        <h3>Discipleship</h3>
+        <div class="page-title">Discipleship</div>
         <div id="lic_discipleship">
           <table class="standard_table small">
             <tbody>
               <tr>
                 <th>
-                  <h4 class="small"></h4>
+                  <h4 class="small"></div>
                 </th>
                 <th>
-                  <h4>Study Title </h4>
+                  <div class="page-title">Study Title </div>
                 </th>
                 <th class="pad5">
-                  <h4 class="small" title="Listen"> <i class="fas fa-fw fa-headphones fa-2x"></i> </h4>
+                  <h4 class="small" title="Listen"> <i class="fas fa-fw fa-headphones fa-2x"></i> </div>
                 </th>
                 <th class="pad5">
-                  <h4 class="small" title="Download"> <i class="fas fa-fw fa-download fa-2x"></i> </h4>
+                  <h4 class="small" title="Download"> <i class="fas fa-fw fa-download fa-2x"></i> </div>
                 </th>
                 <th class="pad5">
-                  <h4 class="small" title="Outline"> <i class="fas fa-fw fa-file-alt fa-2x"></i> </h4>
+                  <h4 class="small" title="Outline"> <i class="fas fa-fw fa-file-alt fa-2x"></i> </div>
                 </th>
               </tr>
               <tr>
@@ -849,6 +851,10 @@
         </div>
       </div>
     </div>
+    <div class="text-center">
+        <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
+    </div>
+    <br /><br />
   </script>
 <!--/DISCIPLESHIP-->
 <!--RESOURCES-->
@@ -858,7 +864,7 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-        <h3>Resources</h3>
+        <div class="page-title">Resources</div>
         <div ng-if="audio.length > 0" class="bold">Audiobooks</div>
         <ul class="list-group resources-menu">
           <li class="list-group-item" ng-repeat="a in audio">
@@ -913,8 +919,8 @@
     <div class="page" ng-controller="SettingsCtrl">
         <goback></goback>
         <div class="col">
-            <h3>Settings</h3>
-            <h4>Push Notifications</h4>
+            <div class="page-title">Settings</div>
+            <div class="page-title">Push Notifications</div>
             <p>
                 If you would like to receive live updates, you can enable that here. Otherwise, you won't see the updates on your phone unless you click on the Announcements page. Should these updates be turned on?
             </p>
@@ -926,7 +932,7 @@
         <goback></goback>
         <div class="col">
             <div id="login-form" style="display: none;">
-                <h3>Login</h3>
+                <div class="page-title">Login</div>
                 <table width="100%">
                     <tr>
                         <td>Email:</td>
@@ -956,7 +962,7 @@
             <div id="loggedin-only" style="display: none;">
               <div style="position: absolute; right: 10px; top: -40px;"><button class="btn btn-link btn-sm logoutUser">Logout</button></div>
             <!--ANN ADMIN-->
-              <h4 class="text-medium">Announcements:</h4>
+              <h4 class="text-medium">Announcements:</div>
               <button class="btn btn-primary btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add New</button>
               <div ng-show="addAnnExpanded">
               <br />
