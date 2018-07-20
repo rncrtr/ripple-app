@@ -62,7 +62,3 @@ $(document).ready(function () {
     
 // end jquery
 });
-
-$(window).on('hashchange', function () {
-   window.scrollTo(0, 1);
-});

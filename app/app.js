@@ -25,6 +25,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $routeProvider.otherwise({redirectTo: '/home'});
 }])
-.controller('app',['$scope','DataService', function ($scope,DataService) {
+.controller('app',['$scope','$rootScope','DataService', function ($scope,$rootScope,DataService) {
 
 }]);
+

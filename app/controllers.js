@@ -162,6 +162,7 @@ angular.module('whiteflag.news', [])
 }])
 
 .controller('NewsCtrl', ['$scope','$http','DataService',function ($scope,$http,DataService) {
+    $scope.topBanner = 'announce.jpg';
     //console.log('news controller');
     DataService.getList('anns').then(function(resp){
       $scope.anns = resp.filter(function(ann){
@@ -189,7 +190,7 @@ angular.module('whiteflag.studies', [])
 .controller('StudiesCtrl', ['$scope', function ($scope) {
   $scope.currentStudy = null;
   $scope.currentPlayer = null;
-  $scope.topBanner = null;
+  $scope.topBanner = 'studies.jpg';
   $scope.menuItems = [
     {name:'Exodus',player_url: '31551'},
     {name:'Elisha',player_url: '31553'},
@@ -249,7 +250,7 @@ angular.module('whiteflag.prayer',[])
 }])
 
 .controller('PrayerCtrl', ['$scope','$http','DataService', function($scope, $http, DataService) {
-  $scope.topBanner = null;
+  $scope.topBanner = 'pray.jpg';
   $scope.blanks = [undefined,null,''];
   $scope.prayerError = false;
   $scope.prayerData = {
@@ -260,6 +261,7 @@ angular.module('whiteflag.prayer',[])
   };
 
   $scope.prepPrayerRequest = function(){
+    $scope.prayerError = false;
     $scope.prayerHtml = '';
     $scope.prayerHtml += "<div>You've been sent a prayer request from the White Flag Mobile App. Here are the details:</div><br /><br />";
     if($scope.blanks.indexOf($scope.prayerName)==-1){
@@ -286,9 +288,24 @@ angular.module('whiteflag.prayer',[])
     DataService.sendMail(prayerData)
     .then(function(resp){
       console.log(resp);
+      if(resp=='OK'){
+        $scope.prayerSentMsg = 'Your prayer request was sent. Pastor Shawn will be praying for you.';
+      }else{
+        $scope.prayerSentMsg = 'Sorry, something went wrong and your prayer request was not sent.';
+      }
       $scope.showResult = true;
     });
 
+  }
+
+  $scope.resetPrayerForm = function(){
+    $scope.prayerHtml = '';
+    $scope.prayerName = null;
+    $scope.prayerEmail = null;
+    $scope.prayerPhone = null;
+    $scope.prayerRequest = null;
+    $scope.showResult = false;
+    window.scrollTo(0,1);
   }
 }]);
 
@@ -315,7 +332,7 @@ angular.module('whiteflag.svcs', [])
 }])
 
 .controller('ServicesCtrl', ['$scope',function($scope) {
-    $scope.topBanner = null;
+    $scope.topBanner = 'lights.jpg';
 }]);
 
 
@@ -333,8 +350,8 @@ angular.module('whiteflag.missions', [])
     };
 }])
 
-  .controller('MissionsCtrl', ['$scope',function($scope) {
-  
+.controller('MissionsCtrl', ['$scope',function($scope) {
+  $scope.topBanner = 'world.jpg';
 }]);
 
 
@@ -346,8 +363,8 @@ angular.module('whiteflag.give',[])
   $routeProvider.when('/giving', { templateUrl: 'giving.html', controller: 'GivingCtrl' });
 }])
 
-.controller('GivingCtrl', [function() {
-
+.controller('GivingCtrl', ['$scope',function($scope) {
+  $scope.topBanner = 'giving.jpg';
 }]);
 
 // FOODBANK
@@ -358,8 +375,8 @@ angular.module('whiteflag.foodbank', [])
   $routeProvider.when('/foodbank', { templateUrl: 'foodbank.html', controller: 'FoodbankCtrl' });
 }])
 
-.controller('FoodbankCtrl', [function() {
-
+.controller('FoodbankCtrl', ['$scope',function($scope) {
+  $scope.topBanner = 'foodbox.jpg';
 }]);
 
 //DISCIPLESHIP
@@ -377,6 +394,7 @@ angular.module('whiteflag.disc',[])
 }])
 
 .controller('DiscipleshipCtrl', ['$scope',function($scope) {
+  $scope.topBanner = 'disciple.jpg';
   $scope.currentAudio = null;
   
   $scope.setCurrentAudio = function(url){
@@ -403,8 +421,7 @@ angular.module('whiteflag.resources', [])
 }])
 
   .controller('ResourcesCtrl', ['$scope',function($scope) {
-    // audio: fa-volume-up
-    // book: fa-book
+    $scope.topBanner = 'resources.jpg';
 
     $scope.resLib = [
       { name: "Managing Your Emotions" },

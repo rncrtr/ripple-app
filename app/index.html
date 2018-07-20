@@ -15,12 +15,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
-  <script type="text/javascript">window.version = '07-18-18-1018';</script>
+  <script type="text/javascript">window.version = '07-19-18-1052';</script>
 </head>
 <body id="body">
   <div class="container" style="margin: 0px; padding: 0px;">
     <nav-menu></nav-menu>
-    <div ng-view></div>
+    <div ng-view autoscroll></div>
   </div>
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
     <div class="col">
@@ -71,7 +71,6 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-          <br />
             <h4>Announcements</h4>
             <div ng-show="!anns" class="text-center"><img src="assets/images/loader.gif" /></div>
             <div ng-repeat="ann in anns" class="card card-block gray-bg" style="padding: 5px 10px;">
@@ -138,25 +137,23 @@
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
           <h3>Prayer Requests</h3>
-          How can we pray for you? Your information will not be shared with anyone but our elders/pastor to pray.<br /><br />
             <div class="prayer-request">
-                <label for="prayerName" class="bold">Name:</label>
+                <!--<label for="prayerName" class="bold">Name:</label>-->
                 <input type="text" id="prayerName" class="form-control" ng-model="prayerName" placeholder="Name" /><br />
-                <label for="prayerEmail" class="bold">Email:</label>
-                <input type="text" id="prayerEmail" class="form-control" ng-model="prayerEmail" placeholder="Email" />
-                <small>Fill in for someone to email you about your request</small><br /><br />
-                <label for="prayerPhone" class="bold">Phone:</label>
-                <input type="text" id="prayerPhone" class="form-control" ng-model="prayerPhone" placeholder="Phone" />
-                <small>Fill in for someone to call you about your request</small><br /><br />
-                <label for="prayerRequest" class="bold">What to pray for: <span class="text-danger bold">*</span></label>
+                <!--<label for="prayerEmail" class="bold">Email:</label>-->
+                <input type="text" id="prayerEmail" class="form-control" ng-model="prayerEmail" placeholder="Email" /><br />
+                <!--<label for="prayerPhone" class="bold">Phone:</label>-->
+                <input type="text" id="prayerPhone" class="form-control" ng-model="prayerPhone" placeholder="Phone" /><br />
+                <label for="prayerRequest" class="bold">How can we pray for you? <span class="text-danger bold">*</span></label>
                 <textarea id="prayerRequest" class="form-control" rows="5" ng-model="prayerRequest"></textarea>
                 <div class="prayer-error text-danger bold" ng-show="prayerError">Please fill in a prayer request to send this.</div>
                 <br />
-                <button class="btn btn-primary btn-block" ng-click="prepPrayerRequest()">Send</button>  
+                <button class="btn btn-primary btn-block" ng-click="prepPrayerRequest()" ng-show="!showResult">Send</button>
+                <span ng-show="showResult">
+                  {{prayerSentMsg}} If you need to talk to someone please call or text Pastor Shawn at 720.505.3808.
+                  <button class="btn btn-link btn-sm" ng-click="resetPrayerForm()"><i class="fas fa-times"></i> Dismiss</button>
+                </span>  
             </div>
-          <div class="text-center"><br />
-              <div class="btn btn-link backtotop" onclick="window.scrollTo(0,0);">Back to Top ^</div>
-          </div>
           <br /><br />
         </div>
     </div>
@@ -178,6 +175,7 @@
                 <p>Devotions by Bob Hoekstra from the book <em>Day by Day by Grace</em>. More information here: <a class="link" href="http://livinginchrist.org/">Living in Christ Ministries</a> </p>
                 <p>App Development donated by Ryan Carter at <a class="link" href="http://overthinkdev.com">OverthinkDev.com</a></p>
                 <p>Our privacy policy is located <a class="link" href="http://whiteflagcalvary.org/privacy-policy">on our website</a>.</p>
+                <p>Photos by <a href="https://pixabay.com" class="link">Pixabay</a> and <a href="https://unsplash.com" class="link">Unsplash</a></p>
         </div>
     </div>
   </script>
@@ -221,6 +219,7 @@
     <div class="page">
         <nav-menu></nav-menu>
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
         <h3>Missions</h3>
         <p>
@@ -520,6 +519,7 @@
   <script type="text/ng-template" id="giving.html">
     <div class="page">
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
             <h3>Giving</h3>
             <p>
@@ -564,6 +564,7 @@
   <script type="text/ng-template" id="foodbank.html">
     <div class="page">
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
             <h3>Love Abounds Food Bank</h3>
             <p class="text-center">
@@ -601,6 +602,7 @@
     <div class="page">
         <nav-menu></nav-menu>
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
         <h3>Discipleship</h3>
         <div id="lic_discipleship">
@@ -854,6 +856,7 @@
     <div class="page">
         <nav-menu></nav-menu>
         <goback></goback>
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
         <h3>Resources</h3>
         <div ng-if="audio.length > 0" class="bold">Audiobooks</div>
@@ -894,7 +897,8 @@
     <br ng-if="videos.length > 0" />
         <div ng-if="audio.length > 0">Our Library</div>
         <small>These resources are available on the back wall of the sanctuary. Please feel free to borrow them.</small>
-        <div ng-repeat="res in resLib | orderBy: 'name'">
+        <input type="text" class="form-control" ng-model="search" placeholder="Search..." /><br />
+        <div ng-repeat="res in resLib | orderBy: 'name' | filter: search">
             {{res.name}}
         </div>
     <br />

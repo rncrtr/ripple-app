@@ -168,4 +168,3 @@ if(deferredPrompt){
   }
 }
 configurePushSub();
-//askForNotificationPermission();
