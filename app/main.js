@@ -73,6 +73,7 @@ function configurePushSub() {
           userVisibleOnly: true,
           applicationServerKey: convertedVapidPublicKey
         });
+
       } else {
         // We have a subscription
         console.log('existing sub');
@@ -115,29 +116,38 @@ function askForNotificationPermission() {
       console.log('No notification permission granted!');
     } else {
       configurePushSub();
+      //ga('send', { hitType: 'event', eventCategory: 'PushNotifications', eventAction: 'enable', eventLabel: 'PushSubs' });
       // displayConfirmNotification();
     }
   });
 }
 
 function installAppToHomescreen(){
+  console.log('install button clicked');
   deferredPrompt.prompt();
   deferredPrompt.userChoice
   .then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the A2HS prompt');
+        //ga('send', { hitType: 'event', eventCategory: 'AppInstalls', eventAction: 'install', eventLabel: 'WhiteFlagPWA' });
       } else {
         console.log('User dismissed the A2HS prompt');
+        //ga('send', { hitType: 'event', eventCategory: 'AppInstalls', eventAction: 'decline', eventLabel: 'WhiteFlagPWA' });
       }
       deferredPrompt = null;
     });
 }
 
+// window.addEventListener('appinstalled', (evt) => {
+//   for (var i = 0; i < installAppButtons.length; i++) {
+//     installAppButtons[i].innerHTML = 'Already installed!';
+//     installAppButtons[i].style.display = 'none';
+//   }
+// });
+
 window.addEventListener('appinstalled', (evt) => {
-  for (var i = 0; i < installAppButtons.length; i++) {
-    installAppButtons[i].innerHTML = 'Already installed!';
-    installAppButtons[i].style.display = 'none';
-  }
+  console.log('appinstalled fired');
+  //ga('send', { hitType: 'event', eventCategory: 'AppInstalls', eventAction: 'install', eventLabel: 'WhiteFlagPWA' });
 });
 
 function urlBase64ToUint8Array(base64String) {
