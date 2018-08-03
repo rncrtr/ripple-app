@@ -256,7 +256,7 @@ angular.module('whiteflag.prayer',[])
   $scope.prayerError = false;
   $scope.prayerData = {
     subject: 'White Flag Mobile: Prayer Request',
-    to: 'me@rncrtr.in',
+    to: 'shawn@whiteflagcalvary.org',
     from: 'donotreply@whiteflagcalvary.org',
     html: ''
   };
