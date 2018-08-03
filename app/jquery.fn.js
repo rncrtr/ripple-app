@@ -1,5 +1,6 @@
 /* global $ */
 $(document).ready(function () {
+  $('#loggedin-only').hide();
     
   $('.menu-drop').click(function(){
     //console.log('clicked');
@@ -34,6 +35,7 @@ $(document).ready(function () {
       var uid = user.uid;
       var providerData = user.providerData;
       //console.log(user);
+      $('button.logoutUser').show();
       setTimeout(function(){
         $('#loggedin-only').show();
         $('.loader').hide();
@@ -41,8 +43,8 @@ $(document).ready(function () {
       
     } else {
       // User is signed out.
-    $('#login-form').show();
-    $('.loader').hide();
+      $('#login-form').show();
+      $('.loader').hide();
     }
   });
 

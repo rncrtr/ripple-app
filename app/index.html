@@ -933,108 +933,108 @@
   </script>
   <script type="text/ng-template" id="settadm.html">
     <div class="page" ng-controller="SettAdmCtrl">
-        <goback></goback>
-        <div class="col">
-            <div id="login-form" style="display: none;">
-                <div class="page-title">Login</div>
-                <table width="100%">
-                    <tr>
-                        <td>Email:</td>
-                        <td>
-                            <input type="text" class="user-email form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Pass:
-                        </td>
-                        <td>
-                            <input type="password" class="user-pass form-control" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <button class="btn btn-primary btn-block loginUser">Login</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="loader text-center">
-              <img src="assets/images/loader.gif" />
-            </div>
-            <div id="loggedin-only" style="display: none;">
-              <div style="position: absolute; right: 10px; top: -40px;"><button class="btn btn-link btn-sm logoutUser">Logout</button></div>
-            <!--ANN ADMIN-->
-              <h4 class="text-medium">Announcements:</div>
-              <button class="btn btn-primary btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add New</button>
-              <div ng-show="addAnnExpanded">
-              <br />
-                <!--<label for="title">Title:</label><br />-->
-                <input id="title" type="text" ng-model="newAnn.title" class="form-control" placeholder="Title" required /><br />
-                <!--<label for="desc">Description:</label><br />-->
-                <textarea id="desc" ng-model="newAnn.desc" type="text" rows="3" class="form-control" required placeholder="Description"></textarea><br />
-                <!--<label for="author">Author:</label><br />-->
-                <input id="author" type="text" ng-model="newAnn.author" class="form-control" placeholder="Author" /><br />
-                <i class="far fa-comment"></i>&nbsp;Notify via Push Message?&nbsp;
-                <label class="switch" ng-show="!editId">
-                  <input type="checkbox" ng-model="newAnn.pushNotify" />
-                  <span class="slider round"></span>
-                </label>
-                <br />
-                <i class="fas fa-upload"></i>&nbsp;Publish to Announcements Page?&nbsp;
-                <label class="switch">
-                  <input type="checkbox" ng-model="newAnn.publishAnn" />
-                  <span class="slider round"></span>
-                </label>
-                <br /><br />
-                <button ng-click="addNewAnn()" class="btn btn-primary btn-block" ng-show="!editId">Save</button>
-                <button ng-click="updateNewAnn()" class="btn btn-primary btn-block" ng-show="editId">Update</button>
-                <br />
-              </div>
-            <!--ANN LIST-->
-            <br /> 
-            <ul class="nav nav-pills nav-justified" style="border-bottom: 1px solid gray;">
-              <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==true}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-bullhorn"></i>&nbsp;Announcements</a></li>
-              <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==false}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-comment"></i>&nbsp;Push Msgs</a></li>
-            </ul>
-            <div ng-show="displayAnn">
+    <goback></goback>
+    <div class="col">
+        <div id="login-form" style="display: none;">
+            <div class="page-title">Login</div>
+            <table width="100%">
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="text" class="user-email form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Pass:
+                    </td>
+                    <td>
+                        <input type="password" class="user-pass form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <button class="btn btn-primary btn-block loginUser">Login</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="loader text-center">
+          <img src="assets/images/loader.gif" />
+        </div>
+        <div id="loggedin-only" style="display: none;">
+          <div style="position: absolute; right: 10px; top: -40px; z-index: 9999;"><button class="btn btn-link btn-sm logoutUser">Logout</button></div>
+          <!--ANN ADMIN-->
+          <h4 class="text-medium">Announcements:</h4>
+          <button class="btn btn-primary btn-block" ng-click="addAnnExpanded=toggle(addAnnExpanded)"><i class="fas fa-plus"></i>&nbsp;Add New</button>
+          <div ng-show="addAnnExpanded">
             <br />
-              <h5>Published:</h5>
-              <div ng-show="!adminAnns">There are no announcements right now.</div>
-              <div ng-repeat="ann in adminAnns | orderBy:'ord'" class="card card-block gray-bg" style="padding: 5px 10px;" ng-show="adminAnns">
-                <strong>{{ann.title}}</strong>
-                <div>{{ann.desc}}</div>
-                <div class="row">
-                  <div class="text-left small gray col-6" ng-show="ann.ts">{{ann.ts | timeago}}</div>
-                  <div class="text-right col-6" style="text-align: right;" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</div>
-                </div>
-                <div class="text-left">
-                  <button class="btn btn-sm" ng-click="editAnn(ann.id)"><i class="fas fa-edit"></i>&nbsp;Edit</button>
-                  <button class="btn btn-sm" ng-click="delAnn(ann.id)"><i class="fas fa-times"></i>&nbsp;Delete</button>
-                  <button class="btn btn-sm" ng-click="moveUp(ann.id,ann.ord)"><i class="fas fa-arrow-up"></i>&nbsp;Up</button>
-                  <button class="btn btn-sm" ng-click="moveDown(ann.id,ann.ord)"><i class="fas fa-arrow-down"></i>&nbsp;Down</button>
-                </div>
-              </div>
-              <br />
-            </div>
-            <!--PUSH NOTIFY-->
-            <div ng-show="!displayAnn">
+            <!--<label for="title">Title:</label><br />-->
+            <input id="title" type="text" ng-model="newAnn.title" class="form-control" placeholder="Title" required /><br />
+            <!--<label for="desc">Description:</label><br />-->
+            <textarea id="desc" ng-model="newAnn.desc" type="text" rows="3" class="form-control" required placeholder="Description"></textarea><br />
+            <!--<label for="author">Author:</label><br />-->
+            <input id="author" type="text" ng-model="newAnn.author" class="form-control" placeholder="Author" /><br />
+            <i class="far fa-comment"></i>&nbsp;Notify via Push Message?&nbsp;
+            <label class="switch" ng-show="!editId">
+              <input type="checkbox" ng-model="newAnn.pushNotify" />
+              <span class="slider round"></span>
+            </label>
             <br />
-              <h5>Sent Notifications:</h5>
-              <div ng-show="!adminPN">There are no push notifications right now.</div>
-              <div ng-repeat="pn in adminPN | orderBy:'ts':true" class="nav-item" style="padding: 5px 10px;" ng-show="adminPN">
-              <hr />
-                <strong>{{pn.title}}</strong><br />
-                <div>{{pn.desc}}</div>
-                <div class="row">
-                  <div class="text-left small gray col-6" ng-show="pn.ts">{{pn.ts | timeago}}</div>
-                </div>
+            <i class="fas fa-upload"></i>&nbsp;Publish to Announcements Page?&nbsp;
+            <label class="switch">
+              <input type="checkbox" ng-model="newAnn.publishAnn" />
+              <span class="slider round"></span>
+            </label>
+            <br /><br />
+            <button ng-click="addNewAnn()" class="btn btn-primary btn-block" ng-show="!editId">Save</button>
+            <button ng-click="updateNewAnn()" class="btn btn-primary btn-block" ng-show="editId">Update</button>
+            <br />
+          </div>
+          <!--ANN LIST-->
+          <br /> 
+          <ul class="nav nav-pills nav-justified" style="border-bottom: 1px solid gray;">
+            <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==true}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-bullhorn"></i>&nbsp;Announcements</a></li>
+            <li class="nav-item"><a class="nav-link" ng-class="{'active':displayAnn==false}" href="#" ng-click="displayAnn=toggle(displayAnn)"><i class="fas fa-comment"></i>&nbsp;Push Msgs</a></li>
+          </ul>
+          <div ng-show="displayAnn">
+            <br />
+            <h5>Published:</h5>
+            <div ng-show="!adminAnns">There are no announcements right now.</div>
+            <div ng-repeat="ann in adminAnns | orderBy:'ord'" class="card card-block gray-bg" style="padding: 5px 10px;" ng-show="adminAnns">
+              <strong>{{ann.title}}</strong>
+              <div>{{ann.desc}}</div>
+              <div class="row">
+                <div class="text-left small gray col-6" ng-show="ann.ts">{{ann.ts | timeago}}</div>
+                <div class="text-right col-6" style="text-align: right;" ng-show="ann.author">&nbsp;&mdash;&nbsp;{{ann.author}}</div>
               </div>
-              <br />
+              <div class="text-left">
+                <button class="btn btn-sm" ng-click="editAnn(ann.id)"><i class="fas fa-edit"></i>&nbsp;Edit</button>
+                <button class="btn btn-sm" ng-click="delAnn(ann.id)"><i class="fas fa-times"></i>&nbsp;Delete</button>
+                <button class="btn btn-sm" ng-click="moveUp(ann.id,ann.ord)"><i class="fas fa-arrow-up"></i>&nbsp;Up</button>
+                <button class="btn btn-sm" ng-click="moveDown(ann.id,ann.ord)"><i class="fas fa-arrow-down"></i>&nbsp;Down</button>
+              </div>
             </div>
+            <br />
+          </div>
+          <!--PUSH NOTIFY-->
+          <div ng-show="!displayAnn">
+            <br />
+            <h5>Sent Notifications:</h5>
+            <div ng-show="!adminPN">There are no push notifications right now.</div>
+            <div ng-repeat="pn in adminPN | orderBy:'ts':true" class="nav-item" style="padding: 5px 10px;" ng-show="adminPN">
+            <hr />
+              <strong>{{pn.title}}</strong><br />
+              <div>{{pn.desc}}</div>
+              <div class="row">
+                <div class="text-left small gray col-6" ng-show="pn.ts">{{pn.ts | timeago}}</div>
+              </div>
+            </div>
+            <br />
           </div>
         </div>
+      </div>
     </div>
   </script>
 <!--/SETTINGS-->
