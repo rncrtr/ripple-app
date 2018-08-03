@@ -148,7 +148,8 @@ angular.module('whiteflag.home', [])
       { icon: 'fas fa-fw fa-chalkboard-teacher', name: 'Resources', url: '/resources' },
       { icon: 'fab fa-fw fa-youtube', name: 'YouTube Videos', url:'https://m.youtube.com/channel/UCNum-_XTF3mmxVUzVRHki8Q',ext: true},
       { icon: 'fab fa-fw fa-facebook', name: 'Facebook Page', url:'https://m.facebook.com/whiteflagcalvary',ext: true},
-      { icon: 'fas fa-fw fa-info', name: 'About The App', url:'/about'}
+      { icon: 'fas fa-fw fa-info', name: 'About The App', url:'/about'},
+      { icon: 'fas fa-fw fa-bug', name: 'Bug Reports', url:'/bugs'}
     ];
 
 }]);
@@ -322,6 +323,17 @@ angular.module('whiteflag.about', ['ngRoute'])
 
 }]);
 
+// BUGS
+//////////////////////////////////////////////////////////
+angular.module('whiteflag.bugs', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/bugs', { templateUrl: 'bugs.html', controller: 'BugsCtrl' });
+}])
+
+.controller('BugsCtrl', [function() {
+
+}]);
 
 // SERVICES
 //////////////////////////////////////////////////////////

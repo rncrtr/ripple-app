@@ -10,6 +10,7 @@ angular.module('whiteflag', [
   'whiteflag.settAdm',
   'whiteflag.settings',
   'whiteflag.about',
+  'whiteflag.bugs',
   'whiteflag.svcs',
   'whiteflag.give',
   'whiteflag.prayer',
