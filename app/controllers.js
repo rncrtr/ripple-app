@@ -138,6 +138,7 @@ angular.module('whiteflag.home', [])
       { icon: 'fas fa-fw fa-book-open', name: 'Today\'s Devotion', url: '/devotions' },
       { icon: 'fas fa-fw fa-bullhorn', name: 'Announcements', url: '/news'},
       { icon: 'far fa-fw fa-clock', name: 'Services & Contact Info', url: '/services'},
+      { icon: 'fas fa-fw fa-podcast', name: 'Sermon Podcast', url: '/studies'},
       { icon: 'far fa-fw fa-map', name: 'Map', url:'https://www.google.com/maps/place/4625+E+Iowa+Ave,+Denver,+CO+80222/@39.6836303,-104.9332396,15z/data=!4m7!1m4!3m3!1s0x876c7dde82eac263:0x2912172574625955!2s4625+E+Iowa+Ave,+Denver,+CO+80222!3b1!3m1!1s0x876c7dde82eac263:0x2912172574625955',ext: true},
       { icon: 'far fa-fw fa-play-circle', name: 'Studies', url:'/studies'},
       { icon: 'far fa-fw fa-paper-plane', name: 'Prayer Requests', url: '/prayer' },
@@ -224,6 +225,26 @@ angular.module('whiteflag.studies', [])
     $scope.setPlayerUrl = function(id){
       return 'https://whiteflagcalvary.sermon.net/widget/listplayer/'+id;
     }
+
+    $scope.copyToClipboard = str => {
+      const el = document.createElement('textarea');  // Create a <textarea> element
+      el.value = str;                                 // Set its value to the string that you want copied
+      el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+      el.style.position = 'absolute';                 
+      el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+      document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+      const selected =            
+        document.getSelection().rangeCount > 0        // Check if there is any content selected previously
+          ? document.getSelection().getRangeAt(0)     // Store selection if found
+          : false;                                    // Mark as false to know no selection existed before
+      el.select();                                    // Select the <textarea> content
+      document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+      document.body.removeChild(el);                  // Remove the <textarea> element
+      if (selected) {                                 // If a selection existed before copying
+        document.getSelection().removeAllRanges();    // Unselect everything on the HTML document
+        document.getSelection().addRange(selected);   // Restore the original selection
+      }
+    };
 }]);
 
 // DEVOTIONS

@@ -95,7 +95,9 @@
         <goback></goback>
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
-            <div class="page-title">Studies</div>
+            <div class="page-title">Studies & Podcast</div>
+            <p style="line-height: 1em;"><small>You can listen to past studies below or subscribe to our podcast to have new ones automatically delivered.<br /><br /><b>iOS:</b>&nbsp;Click this <a href="https://itunes.apple.com/us/podcast/white-flag-calvary/id805890545?mt=2" class="link">iTunes link</a> to subscribe.
+              <br /><b>Android:</b>&nbsp;Click to copy <a href="" ng-click="copyToClipboard('http://whiteflagcalvary.sermon.net/rss/main')" class="link">this RSS link</a>, then paste in your favorite podcast app. <a href="https://play.google.com/store/apps/details?id=fm.castbox.audiobook.radio.podcast&hl=en" class="link">Castbox.FM</a>, <a href="https://play.google.com/store/apps/details?id=sanity.podcast.freak&hl=en" class="link">Podcast Go</a>, and <a href="https://play.google.com/store/apps/details?id=com.bambuna.podcastaddict&hl=en" class="link">Podcast Addict</a> are top choices if you need one.</small></p>
         </div>
         <ul class="list-group" >
             <li class="list-group-item" ng-repeat="mi in menuItems" ng-click="setStudy(mi.name)">
