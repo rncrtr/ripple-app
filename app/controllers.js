@@ -194,6 +194,7 @@ angular.module('whiteflag.studies', [])
   $scope.currentPlayer = null;
   $scope.topBanner = 'studies.jpg';
   $scope.menuItems = [
+    {name: 'Grace Discipleship',player_url: '34369'},
     {name:'Exodus',player_url: '31551'},
     {name:'Elisha',player_url: '31553'},
     {name:'Philippians',player_url: '31554'},

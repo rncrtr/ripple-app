@@ -29,4 +29,3 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 .controller('app',['$scope','$rootScope','DataService', function ($scope,$rootScope,DataService) {
 
 }]);
-
