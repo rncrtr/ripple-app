@@ -31,13 +31,16 @@ angular.module('navMenu', []).directive('navMenu', function() {
         '<li class="nav-item col-2-sm">'+
           '<a class="nav-link text-white" href="/prayer">Prayer</a>'+
         '</li>'+
-        '<li class="hamburger" class="nav-item">' +
-          '<a class="text-white menu-drop" href=""><i class="fas fa-fw fa-bars"></i></a>' +
-        '</li>' +
+        
       '</ul>'
   };
 });
 
+/* 
+'<li class="hamburger" class="nav-item">' +
+  '<a class="text-white menu-drop" href=""><i class="fas fa-fw fa-bars"></i></a>' +
+'</li>' +
+*/
 
 //////////////////////////////////////////////////
 // DATA SERVICE
