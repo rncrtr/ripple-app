@@ -1,4 +1,4 @@
-var version = '07-14-18-0831';
+var version = '12-09-18-1102';
 var CACHE_NAME = 'whiteflag-'+version;
 var urlsToCache = [
     './?'+version,
@@ -53,58 +53,58 @@ self.addEventListener('fetch', function(event) {
     // );
 });
 
-self.addEventListener('notificationClick',function(event){
-    var notification = event.notification;
-    var action = event.action;
+// self.addEventListener('notificationClick',function(event){
+//     var notification = event.notification;
+//     var action = event.action;
 
-    console.log(notification);
+//     console.log(notification);
 
-    if(action === 'confirm'){
-        console.log('Confirm was chosen');
-        event.waitUntil(
-            clients.matchAll()
-            .then(function(clients){
-                var client = clients.find(function(c){
-                    c.visibilityState === 'visible'
-                });
+//     if(action === 'confirm'){
+//         console.log('Confirm was chosen');
+//         event.waitUntil(
+//             clients.matchAll()
+//             .then(function(clients){
+//                 var client = clients.find(function(c){
+//                     c.visibilityState === 'visible'
+//                 });
 
-                // if(client!==undefined){
-                //     client.navigate('http://localhost:8080');
-                //     client.focus();
-                // }else{
-                //     clients.openWindow('http://localhost:8080');
-                // }
-                notification.close();
-            })
-        );
+//                 // if(client!==undefined){
+//                 //     client.navigate('http://localhost:8080');
+//                 //     client.focus();
+//                 // }else{
+//                 //     clients.openWindow('http://localhost:8080');
+//                 // }
+//                 notification.close();
+//             })
+//         );
         
-    }else{
-        console.log(action);
-    }
-});
+//     }else{
+//         console.log(action);
+//     }
+// });
 
-self.addEventListener('push',function(event){
-    console.log('Push notification received',event);
+// self.addEventListener('push',function(event){
+//     console.log('Push notification received',event);
 
-    var data = {title: 'Default Message',content: 'placeholder text',url:'/'};
-    if(event.data){
-        data = JSON.parse(event.data.text());
-    }
+//     var data = {title: 'Default Message',content: 'placeholder text',url:'/'};
+//     if(event.data){
+//         data = JSON.parse(event.data.text());
+//     }
 
-    var options = {
-        body: data.content,
-        icon: 'assets/images/app-icon96.png',
-        badge: 'assets/images/app-icon96.png',
-        data: {
-            url: data.url
-        }
-    };
+//     var options = {
+//         body: data.content,
+//         icon: 'assets/images/app-icon96.png',
+//         badge: 'assets/images/app-icon96.png',
+//         data: {
+//             url: data.url
+//         }
+//     };
 
-    event.waitUntil(
-        self.registration.showNotification(data.title,options)
-    );
-});
+//     event.waitUntil(
+//         self.registration.showNotification(data.title,options)
+//     );
+// });
 
-self.addEventListener('onupdatefound',function(event){
-    console.log(event);
-});
+// self.addEventListener('onupdatefound',function(event){
+//     console.log(event);
+// });
