@@ -46,7 +46,9 @@
 </head>
 <body id="body">
   <div class="container-fluid" style="margin: 0px; padding: 0px;">
+    <!--
     <nav-menu></nav-menu>
+    -->
     <div ng-view autoscroll></div>
   </div>
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
@@ -67,6 +69,42 @@
       </div>
     </div>
   </div>
+<!--LANG-->
+<script type="text/ng-template" id="lang.html">
+    <div class="page">
+      <br />
+      <div style="width: 100%; text-align: center;">
+        <img src="assets/images/app-icon192.png" />
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-6 center">
+            <h3>Welcome!</h3>
+            <div>
+            <br />
+            "...for you are all one in Christ Jesus."<br /><small>Galatians 3:28 (NKJV)</small>
+            </div>
+            <br />
+            <div class="btn btn-dark btn-lg" style="text-align: center;">
+            Continue in <br />English
+            </div>
+
+        </div>
+        <div class="col-6 center">
+            <h3>Bienvenido!</h3>
+            <div>
+            <br />
+            "...todos ustedes son uno en Cristo Jesús"<br /><small>Gálatas 3:28 (NKJV)</small>
+            </div>
+            <br />
+            <div class="btn btn-dark btn-lg" style="text-align: center;">
+            Continuar en <br />Español
+            </div>
+        </div>
+      </div>
+    </div>
+  </script>
+<!--/LANG-->` 
 <!--HOME-->  
   <script type="text/ng-template" id="home.html">
     <div class="page">
@@ -249,7 +287,6 @@
             <b>First Wednesday of the Month</b><br />
             Surrender Service<br />
             7:00 pm<br />
-            (childcare available)
             </p>
             <p>
             4625 E. Iowa Ave.<br />

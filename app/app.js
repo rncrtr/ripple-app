@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('whiteflag', [
   'ngRoute',
+  'whiteflag.lang',
   'whiteflag.home',
   'whiteflag.studies',
   'whiteflag.devotions',
@@ -24,7 +25,7 @@ angular.module('whiteflag', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.html5Mode(true);
 
-  $routeProvider.otherwise({redirectTo: '/home'});
+  $routeProvider.otherwise({redirectTo: '/lang'});
 }])
 .controller('app',['$scope','$rootScope','DataService', function ($scope,$rootScope,DataService) {
 

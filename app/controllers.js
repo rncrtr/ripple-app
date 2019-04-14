@@ -124,6 +124,21 @@ angular.module('whiteflag').factory('DataService',['$http',function($http){
 }]);
 
 /////////////////////////////////////////////////
+// LANG
+angular.module('whiteflag.lang', [])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/lang', {
+    templateUrl: 'lang.html',
+    controller: 'LangCtrl'
+  });
+}])
+
+.controller('LangCtrl', ['$scope', function ($scope) {
+
+
+}]);
+
 
 // HOME
 angular.module('whiteflag.home', [])

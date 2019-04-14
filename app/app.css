@@ -41,6 +41,7 @@ a{ color: #000000 !important; }
 .pad5{padding-left: 5px; padding-right: 5px; }
 .v-top{vertical-align: top; padding-right: 3px;}
 .hidden{display: none;}
+.center{text-align: center;}
 hr{
 border: 0;
 height: 1px;
