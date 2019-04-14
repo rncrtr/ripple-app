@@ -25,7 +25,7 @@ angular.module('whiteflag', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.html5Mode(true);
 
-  $routeProvider.otherwise({redirectTo: '/lang'});
+  $routeProvider.otherwise({redirectTo: '/home'});
 }])
 .controller('app',['$scope','$rootScope','DataService', function ($scope,$rootScope,DataService) {
 
