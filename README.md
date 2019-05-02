@@ -1,4 +1,4 @@
-# White Flag Calvary Mobile
+#Ripple App
 _____
 
 ## Installing Dependencies
