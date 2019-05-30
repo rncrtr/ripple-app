@@ -26,11 +26,21 @@ angular.module('navMenu', []).directive('navMenu', function() {
   };
 });
 
+angular.module('filters',[])
+.filter('churchname', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = '';
+    out = input.replace(', USA','');
+    return out;
+  };
+});
+
 //////////////////////////////////////////////////
 // DATA SERVICE
 angular.module('ripple').factory('DataService',['$http',function($http){
   var BASE_URL = 'https://ripplemissions.com/';
-  var config = {"Content-Type":"application/json"};
+  var config = {"Content-Type":"application/json", Cache: true};
   return {
     BASE_URL: BASE_URL,
     getList: getList,
@@ -129,36 +139,12 @@ angular.module('ripple.home', [])
 
 .controller('HomeCtrl', ['$scope','DataService','$timeout','$localStorage', function ($scope,DataService,$timeout,$localStorage) {
   
-  $scope.churchSearch = churchSearch();
-  setChurch();
+  // Init: Not set, don't show change link
+  // Set prev: Try to set it from localStorage
+  // Set now: from search query
 
-  function setChurch(){
-    if(!$localStorage.church_name){
-      $localStorage.church_name = church_name;
-      console.log('Church name not set');
-    }else{
-      $scope.churchQuery = decodeURIComponent($localStorage.church_name);
-      churchSearch();
-      console.log('Church Name: ',$localStorage.church_name);
-    }
-  }
-
-  function churchSearch(){
-    $timeout(function() {
-      $scope.churchQuery = $('#church-search').val();
-      var church_name = encodeURIComponent($scope.churchQuery);
-      if(church_name.length > 3){
-        DataService.getMissionsByChurchName(church_name).then(function(resp){
-          console.log('Missions by Church',resp);
-          $scope.missionsByChurch = resp.data;
-        });
-      }
-    }, 500);
-  }
-
-  function changeChurch(){
-    $scope.churchQuery = null;
-  }
+  initMap();
+  //setChurch();
 
   function initMap() {
     var input = document.getElementById('church-search');
@@ -167,7 +153,73 @@ angular.module('ripple.home', [])
     autocomplete.setTypes(['establishment']);
   }
 
-  initMap();
+  $scope.showChurchConfirm = function(){
+    if($scope.confirmChurch == null && $scope.churchQuery != null){
+      $timeout(function() { 
+        $scope.displayChurchQuery = $('#church-search').val();
+        $scope.confirmChurch = true;
+      }, 500);
+    }
+  }
+
+  $scope.selectChurch = function(church){
+    if(!church){
+      $scope.displayChurchQuery = $('#church-search').val();
+      $scope.churchQuery = $('#church-search').val();
+    }else{
+      $scope.displayChurchQuery = church;
+      $scope.churchQuery = church;
+    }
+    $scope.getMissionsByChurch($scope.churchQuery);
+
+  }
+
+  $scope.resetSearch = function(){
+    $scope.confirmChurch = null;
+    $scope.churchQuery = null;
+    $scope.displayChurchQuery = null;
+    $('#church-search').focus();
+  }
+
+  $scope.getMissionsByChurch = function(churchQuery){
+    $scope.confirmChurch = false;
+    $scope.loading = true;
+    $scope.loadingMessage = "Loading missionaries for your church...";
+    $timeout(function() {
+      var church_name = encodeURIComponent(churchQuery);
+      if(church_name.length > 3){
+        DataService.getMissionsByChurchName(church_name).then(function(resp){
+          console.log('Missions by Church',resp);
+          $scope.missionsByChurch = resp.data;
+          $scope.loading = false;
+          $scope.storeChurchInfo();
+        });
+      }
+    }, 400);
+  }
+
+  $scope.storeChurchInfo = function(){
+    $localStorage.church_name = $scope.displayChurchQuery;
+  }
+
+  $scope.changeChurch = function(){
+    $scope.resetSearch();
+    delete $localStorage.church_name;
+    $scope.missionsByChurch = null;
+  }
+
+  $scope.getStoredChurch = function(){
+    if($localStorage){
+      if($localStorage.church_name){
+        $scope.churchQuery = $localStorage.church_name;
+        $scope.displayChurchQuery = $localStorage.church_name;
+        $scope.selectChurch($localStorage.church_name);
+      }
+    }
+  }
+
+  $scope.getStoredChurch();
+  
 }]);
 
 

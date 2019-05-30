@@ -9,7 +9,8 @@ angular.module('ripple', [
   'ripple.bugs',
   'goback',
   'navMenu',
-  'ngStorage'
+  'ngStorage',
+  'filters'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.html5Mode(true);

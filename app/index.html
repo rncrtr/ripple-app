@@ -49,7 +49,7 @@
           <span class="slider round"></span>
         </label>
         <!--<button class="btn btn-sm btn-primary enable-notifications">Yes, enable</button>-->
-        <br /><p style="font-size: small">NOTE: You can disable notifications in device settings.</p>
+        <br /><p style="font-size: small">NOTE: You can disable notifications in device app settings.</p>
         <!--
         <b>Install App to Homescreen?</b>
         <button class="btn btn-sm btn-block btn-primary install-app">Install App</button>
@@ -59,24 +59,60 @@
   </div>
 <!--HOME-->  
   <script type="text/ng-template" id="home.html">
-    <div class="page" style="margin-top: 10px;">
-      <div class="center">
-        <img src="assets/images/RippleMissionsLogo.jpg" width="50%" style="min-height: 80px;" />
+    <div class="page">
+      <div class="center" style="margin-top: -35px; width: 100%">
+        <img src="assets/images/ripple-icon-48.jpg" style="padding-bottom: 12px;" />&nbsp;&nbsp;
+        <h1 style="line-height: 1em; font-size: 32px; display: inline-block">Ripple Missions</h1>
         <div class="col">
-          <br /><h4>Find your church:</h4>
-          <input id="church-search" type="text" class="form-control" ng-model="churchQuery" ng-blur="churchSearch()" ng-click="churchQuery = ''; missionsByChurch = null" />
-          <div class="pull-right"><small ng-show="churchQuery"><button class="btn btn-link" ng-click="changeChurch()">Change Church</button></small></div>
+        <br />
+          <!--<h4>Find your church:</h4>-->
+          <input id="church-search" type="text" class="form-control" ng-model="churchQuery" ng-show="!confirmChurch && !displayChurchQuery" ng-blur="showChurchConfirm()" placeholder="Type Church Name here" />
+          <div ng-show="displayChurchQuery"><i><small>Your church is set to:</small></i><br />{{displayChurchQuery|churchname}}<span class="pull-right">&nbsp;<small ng-if="displayChurchQuery && !confirmChurch"><a href="" class="btn btn-link btn-sm" ng-click="changeChurch()">Change Church</a></small></span></div>
+          <br />
+          <div class="pull-right" ng-show="confirmChurch">Is this your church? <br /><br />
+          <button class="btn btn-success btn-sm" ng-click="selectChurch()">Yes, let's go!</button>
+          &nbsp;&nbsp;&nbsp;
+          <button class="btn btn-danger btn-sm" ng-click="resetSearch()">No, start over...</button></div>
+          
+          <div id="loading" ng-if="loading" class="center row">
+            <div class="center fullwidth bold" ng-if="loadingMessage">{{loadingMessage}}</div>
+            <div class="lds-css ng-scope center"><div style="width:100%;height:100%" class="lds-ripple"><div></div><div></div></div></div>
+          </div>
         </div>
       </div>
-      <br />
-      <div class="col" ng-if="missionsByChurch.length == 0">No missionaries found. Please contact your church and ask them to add your missionaries to our list so everyone at your church can find them easily.</div>
-      <ul class="list-group list-group-flush" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
-        <li class="list-group-item list-group-item-action">
-          <h3 class="mb-1">{{mission.acf.name}}</h3>
-          <div>{{mission.acf.country}}</div>
-          <small class="text-muted">{{mission.acf.category}}</small>
-        </li>
-      </ul>
+      <div class="col" ng-if="missionsByChurch.length == 0 && displayChurchQuery && !confirmChurch">
+        <h3>Oh no! No missionaries were found for your church. :(</h3><br />
+        <h4>Steps you can take:</h4>
+        <ol>
+          <li>
+            You can ask your church to add missionaries here:
+            <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a>
+          </li>
+          <li>
+            You can add missionaries yourself if you'd like:
+            <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a>
+          </li>
+          <li>
+            You can email us at<br />c
+            <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a> with missionary or church info so we can add them.
+          </li>
+        </ol>
+      </div>
+      <div class="center" ng-show="missionsByChurch.length == 0 && displayChurchQuery"><button class="btn btn-primary btn-sm" ng-click="resetSearch()">Start over...</button></div>
+      <!--MISSIONS LIST-->
+        <h3 ng-if="missionsByChurch.length > 0" class="col-md-12">Missionaries</h3>
+        <ul class="list-group list-group-flush" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
+          <li class="list-group-item list-group-item-action">
+            <h3 class="mb-1">{{mission.acf.name}}</h3>
+            <div>{{mission.acf.country}}</div>
+            <small class="text-muted">{{mission.acf.category}}</small>
+          </li>
+        </ul>
+        <br /><br />
+        <div class="col-md-12" ng-if="missionsByChurch.length > 0">
+          <h4 class="center">Where in the world are Manny and Missy McMissions?</h4>
+          Oops! Are we missing a missionary? Please add them here: <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a> or email us at <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a>. We'll add them for you!
+        </div>
     </div>
   </script>
 <!--/HOME-->
