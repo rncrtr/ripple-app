@@ -8,7 +8,8 @@ angular.module('ripple', [
   'ripple.about',
   'ripple.bugs',
   'goback',
-  'navMenu'
+  'navMenu',
+  'ngStorage'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.html5Mode(true);

@@ -127,13 +127,47 @@ angular.module('ripple.home', [])
   });
 }])
 
-.controller('HomeCtrl', ['$scope','DataService', function ($scope,DataService) {
-  $scope.churchSearch = function(e){
-    var church_name = encodeURIComponent($scope.churchQuery);
-    DataService.getMissionsByChurchName(church_name).then(function(resp){
-      console.log('Missions by Church',resp);
-    });
-  };
+.controller('HomeCtrl', ['$scope','DataService','$timeout','$localStorage', function ($scope,DataService,$timeout,$localStorage) {
+  
+  $scope.churchSearch = churchSearch();
+  setChurch();
+
+  function setChurch(){
+    if(!$localStorage.church_name){
+      $localStorage.church_name = church_name;
+      console.log('Church name not set');
+    }else{
+      $scope.churchQuery = decodeURIComponent($localStorage.church_name);
+      churchSearch();
+      console.log('Church Name: ',$localStorage.church_name);
+    }
+  }
+
+  function churchSearch(){
+    $timeout(function() {
+      $scope.churchQuery = $('#church-search').val();
+      var church_name = encodeURIComponent($scope.churchQuery);
+      if(church_name.length > 3){
+        DataService.getMissionsByChurchName(church_name).then(function(resp){
+          console.log('Missions by Church',resp);
+          $scope.missionsByChurch = resp.data;
+        });
+      }
+    }, 500);
+  }
+
+  function changeChurch(){
+    $scope.churchQuery = null;
+  }
+
+  function initMap() {
+    var input = document.getElementById('church-search');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.setFields(['address_components','name']);
+    autocomplete.setTypes(['establishment']);
+  }
+
+  initMap();
 }]);
 
 

@@ -30,6 +30,7 @@
       this.setState({ showInstallMessage: true });
     }
   </script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiCb9lPiSP6BejEACJ4Aql07tdegzGUo8&libraries=places"></script>
 </head>
 <body id="body">
   <div class="container-fluid" style="margin: 0px; padding: 0px;">
@@ -63,9 +64,19 @@
         <img src="assets/images/RippleMissionsLogo.jpg" width="50%" style="min-height: 80px;" />
         <div class="col">
           <br /><h4>Find your church:</h4>
-          <input class="form-control" ng-model="churchQuery" ng-change="churchSearch()" />
+          <input id="church-search" type="text" class="form-control" ng-model="churchQuery" ng-blur="churchSearch()" ng-click="churchQuery = ''; missionsByChurch = null" />
+          <div class="pull-right"><small ng-show="churchQuery"><button class="btn btn-link" ng-click="changeChurch()">Change Church</button></small></div>
         </div>
       </div>
+      <br />
+      <div class="col" ng-if="missionsByChurch.length == 0">No missionaries found. Please contact your church and ask them to add your missionaries to our list so everyone at your church can find them easily.</div>
+      <ul class="list-group list-group-flush" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
+        <li class="list-group-item list-group-item-action">
+          <h3 class="mb-1">{{mission.acf.name}}</h3>
+          <div>{{mission.acf.country}}</div>
+          <small class="text-muted">{{mission.acf.category}}</small>
+        </li>
+      </ul>
     </div>
   </script>
 <!--/HOME-->
@@ -123,6 +134,7 @@
 <!--/SETTINGS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="jquery.fn.js"></script>
   <script src="app.js"></script>
