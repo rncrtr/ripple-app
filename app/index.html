@@ -59,61 +59,158 @@
   </div>
 <!--HOME-->  
   <script type="text/ng-template" id="home.html">
-    <div class="page">
-      <div class="center" style="margin-top: -35px; width: 100%">
-        <img src="assets/images/ripple-icon-48.jpg" style="padding-bottom: 12px;" />&nbsp;&nbsp;
-        <h1 style="line-height: 1em; font-size: 32px; display: inline-block">Ripple Missions</h1>
-        <div class="col">
+    <div class="page container-fluid">
+      <div style="margin-top: -50px; width: 100%; background-color: #0094FF;">
+        <img src="assets/images/ripple-missions-icon.jpg" style="width: 42px" />&nbsp;&nbsp;
+        <img src="assets/images/ripple-missions-words-white.png" style="padding-top: 5px; width: 45%" />
+      </div>
+      <div class="col clear">
+        <input id="church-search" type="text" class="form-control" style="margin-top: 15px;" ng-model="churchQuery" ng-show="!confirmChurch && !displayChurchQuery" ng-blur="showChurchConfirm()" placeholder="Type Church Name" />
+        <div ng-show="displayChurchQuery" class="clear" style="margin-top: -20px;">
+          <br />{{displayChurchQuery|churchname}}
+          <div class="float-right" style="margin-top: -5px;">&nbsp;
+            <small ng-if="displayChurchQuery && !confirmChurch">
+              <a href="" ng-click="changeChurch()">Change</a>
+            </small>
+          </div>
+        </div>
         <br />
-          <!--<h4>Find your church:</h4>-->
-          <input id="church-search" type="text" class="form-control" ng-model="churchQuery" ng-show="!confirmChurch && !displayChurchQuery" ng-blur="showChurchConfirm()" placeholder="Type Church Name here" />
-          <div ng-show="displayChurchQuery"><i><small>Your church is set to:</small></i><br />{{displayChurchQuery|churchname}}<span class="pull-right">&nbsp;<small ng-if="displayChurchQuery && !confirmChurch"><a href="" class="btn btn-link btn-sm" ng-click="changeChurch()">Change Church</a></small></span></div>
-          <br />
-          <div class="pull-right" ng-show="confirmChurch">Is this your church? <br /><br />
-          <button class="btn btn-success btn-sm" ng-click="selectChurch()">Yes, let's go!</button>
-          &nbsp;&nbsp;&nbsp;
-          <button class="btn btn-danger btn-sm" ng-click="resetSearch()">No, start over...</button></div>
-          
-          <div id="loading" ng-if="loading" class="center row">
-            <div class="center fullwidth bold" ng-if="loadingMessage">{{loadingMessage}}</div>
-            <div class="lds-css ng-scope center"><div style="width:100%;height:100%" class="lds-ripple"><div></div><div></div></div></div>
+        <div class="center">
+          <div class="pull-right" ng-show="confirmChurch" style="padding-bottom: 20px;">Is this your church? <br /><br />
+            <button class="btn btn-success btn-sm" ng-click="selectChurch()">Yes, let's go!</button>
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-danger btn-sm" ng-click="resetSearch()">No, start over...</button>
           </div>
         </div>
       </div>
-      <div class="col" ng-if="missionsByChurch.length == 0 && displayChurchQuery && !confirmChurch">
-        <h3>Oh no! No missionaries were found for your church. :(</h3><br />
+      <!--LOADER-->
+      <div id="loading" ng-if="loading" class="center row" style="margin-top: 30px;">
+        <div class="center fullwidth bold" ng-if="loadingMessage">{{loadingMessage}}</div>
+        <div class="lds-css ng-scope center"><div style="width:100%;height:100%" class="lds-ripple"><div></div><div></div></div></div>
+      </div>
+      <!--/LOADER-->
+      <!--EMPTY LIST-->
+      <div class="col" ng-if="missionsByChurch.length == 0 && displayChurchQuery && !confirmChurch && !loading">
+        <h3>Oh no! No missionaries were found for your church. :(</h3>
         <h4>Steps you can take:</h4>
-        <ol>
-          <li>
+        <ol style="padding-inline-start: 15px">
+          <li style="margin-left: 0px">
             You can ask your church to add missionaries here:
             <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a>
           </li>
-          <li>
+          <li style="margin-left: 0px">
             You can add missionaries yourself if you'd like:
             <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a>
           </li>
-          <li>
-            You can email us at<br />c
+          <li style="margin-left: 0px">
+            You can email us at<br />
             <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a> with missionary or church info so we can add them.
           </li>
         </ol>
       </div>
-      <div class="center" ng-show="missionsByChurch.length == 0 && displayChurchQuery"><button class="btn btn-primary btn-sm" ng-click="resetSearch()">Start over...</button></div>
+      <!--START OVER BUTTON-->
+      <div class="center" ng-show="missionsByChurch.length == 0 && displayChurchQuery && !confirmChurch"><button class="btn btn-primary btn-sm" ng-click="resetSearch()">Start over...</button></div>
       <!--MISSIONS LIST-->
-        <h3 ng-if="missionsByChurch.length > 0" class="col-md-12">Missionaries</h3>
-        <ul class="list-group list-group-flush" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
-          <li class="list-group-item list-group-item-action">
-            <h3 class="mb-1">{{mission.acf.name}}</h3>
-            <div>{{mission.acf.country}}</div>
-            <small class="text-muted">{{mission.acf.category}}</small>
-          </li>
-        </ul>
-        <br /><br />
-        <div class="col-md-12" ng-if="missionsByChurch.length > 0">
-          <h4 class="center">Where in the world are Manny and Missy McMissions?</h4>
-          Oops! Are we missing a missionary? Please add them here: <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a> or email us at <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a>. We'll add them for you!
+      <div class="listitems">
+        <div class="listitem" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
+          <div class="row">
+            <div class="col-3 offset-md-1" style="margin-top: 15px; margin-left: 0px" ng-show="mission.acf.photo">
+              <img ng-src="{{mission.acf.photo}}" width="100" />
+            </div>
+            <div class="col-3 offset-md-1" style="margin-top: 15px; margin-left: 0px" ng-show="!mission.acf.photo">
+              <img src="https://ripplemissions.com/wp-content/uploads/2019/04/ripple-icon-192.jpg" width="100" />
+            </div>
+            <div class="col" style="margin-left: 0px;">
+              <h3>{{mission.acf.name|amp}}</h3>  
+              <div style="margin-top: -10px">
+                <div class="text-muted">
+                  <div ng-if="mission.acf.category">Serving in {{mission.acf.category}}</div>
+                  <div ng-if="mission.acf.country"> in {{mission.acf.country}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-show="mission.acf.bio">
+            <div class="col-1"></div>  
+            <div class="col" style="margin-right: 20px;">
+              <h4>Bio:</h4>
+              <p><small>{{mission.acf.bio}}</small></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>  
+            <div class="col" style="margin-right: 20px;">
+              <h4>Contact Info:</h4>
+              <div ng-if="mission.acf.should_supporters_directly_email[0]=='yes'">
+                <i class="far fa-fw fa-envelope pull-right" title="Email"></i>
+                <a class="link" ng-href="mailto:{{mission.acf.email}}">{{mission.acf.email}}</a>
+              </div>
+              <div ng-if="mission.acf.should_supporters_directly_text[0]=='yes'">
+                <i class="fas fa-fw fa-phone-square" title="Phone"></i>
+                <a class="link" ng-href="mailto:{{mission.acf.phone}}">{{mission.acf.phone}}</a>
+              </div>
+              <div ng-if="mission.acf.websiteblog">
+                <i class="fas fa-fw fa-globe" title="Website"></i>
+                <a class="link" ng-href="{{mission.acf.websiteblog}}">{{mission.acf.websiteblog|nohttp}}</a>
+              </div>
+              <div ng-if="mission.acf.facebook_page">
+                <i class="fab fa-fw fa-facebook-f" title="Facebook"></i>
+                <a class="link" ng-href="https://facebook.com/{{mission.acf.facebook_page}}">{{mission.acf.facebook_page|nohttp}}</a>
+              </div>
+              <div ng-if="mission.acf.twitter_profile">
+                <i class="fab fa-fw fa-twitter" title="Twitter"></i>
+                <a class="link" ng-href="https://twitter.com/{{mission.acf.twitter_profile}}">@{{mission.acf.twitter_profile|nohttp}}</a>
+              </div>
+              <div ng-if="mission.acf.instagram">
+                <i class="fab fa-fw fa-instagram" title="Instagram"></i>
+                <a class="link" ng-href="https://instagram.com/{{mission.acf.instagram}}">@{{mission.acf.instagram|nohttp}}</a>
+              </div>
+              <div ng-if="mission.acf.whatsapp">
+                <i class="fab fa-fw fa-whatsapp" title="Whatsapp"></i>
+                <a class="link" ng-href="mission.acf.whatsapp">{{mission.acf.whatsapp|nohttp}}</a>
+              </div>
+              <div ng-if="mission.acf.other_social">
+                <strong>Other:</strong> 
+                {{mission.acf.other_social}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>  
+            <div class="col" style="margin-right: 20px;" ng-show="mission.acf.paypal_email || mission.acf.donation_url || mission.acf.donation_instructions">
+              <h4>Donation Info:</h4>
+              <div ng-if="mission.acf.paypal_email">
+                <span><ripple-donate-once email="mission.acf.paypal_email" /></span>
+                <span><br /><ripple-donate-monthly email="mission.acf.paypal_email" /></span>
+              </div>
+              <div ng-if="mission.acf.donation_url">
+                <br /><strong>Donate Here:</strong><br /> 
+                <a class="link" ng-href="{{mission.acf.donation_url}}">{{mission.acf.donation_url}}</a>
+              </div>
+              <div ng-if="mission.acf.donation_instructions">
+                <br /><strong>More Info:</strong><br /> 
+                {{mission.acf.donation_instructions}}
+              </div>
+              <div ng-if="mission.acf.wishlist" class="clear">
+                <br /><strong>Wishlist Items:</strong><br /> 
+                <li ng-repeat="line in (mission.acf.wishlist | newlines) track by $index">
+                    {{line}}
+                </li>
+                <br /><p class="text-muted"><small>Items you send are a great encouragement to those serving overseas.</small></p>
+              </div>
+            </div>
+            <br />
+          </div>
+          <div class="bottom-border"></div>
         </div>
-    </div>
+      </div>
+      <!--/MISSIONS LIST-->
+      <div class="listitem" ng-if="missionsByChurch.length > 0">&nbsp;</div>
+      <br /><br />
+      <div class="col-md-12" ng-if="missionsByChurch.length > 0">
+        <h4>Where in the world is Missy McMissions?</h4>
+        Oops! Are we missing a missionary? Please add them here: <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a> or email us at <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a>. We'll add them for you!
+      </div>
   </script>
 <!--/HOME-->
 <!--ABOUT-->

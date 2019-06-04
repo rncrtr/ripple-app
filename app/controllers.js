@@ -34,7 +34,80 @@ angular.module('filters',[])
     out = input.replace(', USA','');
     return out;
   };
+})
+.filter('newlines', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = [];
+    out = input.split('\n')
+    return out;
+  };
+})
+.filter('nohttp', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = [];
+    out = input.replace('https://','');
+    out = out.replace('http://','');
+    out = out.replace('www.','');
+    return out;
+  };
+})
+.filter('amp', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = [];
+    out = input.replace(' and ',' & ');
+    return out;
+  };
+})
+;
+
+angular.module('ripple')
+.directive('rippleDonateOnce', function() {
+  return {
+    scope: {
+      onceEmail: '=email'
+    },
+    template: '<form class="ripple-donate-form ripple-donate-once clear" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">' + 
+        '<input type="hidden" style="height: 0px;" name="cmd" value="_donations" />' +
+        '<input type="hidden" style="height: 0px;" name="charset" value="utf-8" />' +
+        '<input type="hidden" style="height: 0px;" name="business" value="{{onceEmail}}" />' +
+        '<input type="hidden" style="height: 0px;" name="no_note" value="1" />' +
+        '<input type="hidden" style="height: 0px;" name="no_shipping" value="1" />' +
+        '<input type="hidden" style="height: 0px;" name="src" value="0" />' +
+        '<input type="hidden" style="height: 0px;" name="item_name" value="One-Time Donation" />' +
+        '<strong class="ripple-donate-title">Paypal Donate (one-time):</strong>' +
+        '<input type="text" name="amount" value="" class="ripple-donate-amount form-control" placeholder="$ - One-Time Amount" />' +
+        '<button type="submit" class="ripple-donate-button ripple-donate-button-once btn btn-sm btn-block btn-primary">Donate One-Time</button>' +
+        '<small>Paypal account NOT required.</small>'+
+      '</form>'
+  };
 });
+
+angular.module('ripple')
+.directive('rippleDonateMonthly', function() {
+  return {
+    scope: {
+      monthlyEmail: '=email'
+    },
+    template: '<form class="ripple-donate-form ripple-donate-monthly clear" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">'+
+      '<input type="hidden" style="height: 0px;" name="cmd" value="_xclick-subscriptions" />'+
+      '<input type="hidden" style="height: 0px;" name="charset" value="utf-8" />'+
+      '<input type="hidden" style="height: 0px;" name="business" value="{{monthlyEmail}}" />'+
+      '<input type="hidden" style="height: 0px;" name="t3" value="M" />'+
+      '<input type="hidden" style="height: 0px;" name="p3" value="1" />'+
+      '<input type="hidden" style="height: 0px;" name="no_note" value="1" />'+
+      '<input type="hidden" style="height: 0px;" name="src" value="1" />'+
+      '<input type="hidden" style="height: 0px;" name="item_name" value="Monthly Donation" />'+
+      '<strong class="ripple-donate-title">Paypal Donate (monthly):</strong>'+
+      '<input type="text" name="a3" value="" class="ripple-donate-amount form-control" placeholder="$ - Monthly Amount" />'+
+      '<button type="submit" class="ripple-donate-button ripple-donate-button-monthly btn btn-sm btn-block btn-primary">Donate Monthly</button>'+
+      '<small>Paypal account required for monthly donations.</small>'+
+    '</form>'
+  };
+});
+
 
 //////////////////////////////////////////////////
 // DATA SERVICE
@@ -190,6 +263,9 @@ angular.module('ripple.home', [])
       if(church_name.length > 3){
         DataService.getMissionsByChurchName(church_name).then(function(resp){
           console.log('Missions by Church',resp);
+          var respdata = resp.data;
+          // parsing
+          console.log(respdata);
           $scope.missionsByChurch = resp.data;
           $scope.loading = false;
           $scope.storeChurchInfo();
