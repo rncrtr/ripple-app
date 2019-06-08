@@ -14,8 +14,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <link rel="stylesheet" href="assets/styles/flags32-iso-3166-1-alpha-2.css">
   <link rel="stylesheet" href="app.css">
   <script type="text/javascript">window.version = '04-27-19-1218';</script>
+  <script src="env.js"></script>
+  <script>
+    //Load env variables
+    var env = {};
+
+    // Import variables if present (from env.js)
+    if(window){  
+      Object.assign(env, window.__env);
+    }
+    //console.log(env);
+  </script>
+
   <script>
     // Detects if device is on iOS 
     const isIos = () => {
@@ -30,9 +43,15 @@
       this.setState({ showInstallMessage: true });
     }
   </script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiCb9lPiSP6BejEACJ4Aql07tdegzGUo8&libraries=places"></script>
 </head>
 <body id="body">
+  <script type="text/javascript">
+    // init maps api
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key='+env.GoogleMapsApiKey+'&libraries=places';
+      document.body.appendChild(script);
+  </script>
   <div class="container-fluid" style="margin: 0px; padding: 0px;">
     <!--
     <nav-menu></nav-menu>
@@ -75,13 +94,15 @@
           </div>
         </div>
         <br />
+        <!--CHURCH CONFIRM-->
         <div class="center">
           <div class="pull-right" ng-show="confirmChurch" style="padding-bottom: 20px;">Is this your church? <br /><br />
-            <button class="btn btn-success btn-sm" ng-click="selectChurch()">Yes, let's go!</button>
+            <button class="btn btn-primary btn-sm" ng-click="selectChurch()">Yes, let's go!</button>
             &nbsp;&nbsp;&nbsp;
-            <button class="btn btn-danger btn-sm" ng-click="resetSearch()">No, start over...</button>
+            <button class="btn btn-warning btn-sm" ng-click="resetSearch()">No, start over...</button>
           </div>
         </div>
+        <!--/CHURCH CONFIRM-->
       </div>
       <!--LOADER-->
       <div id="loading" ng-if="loading" class="center row" style="margin-top: 30px;">
@@ -115,17 +136,24 @@
         <div class="listitem" ng-if="missionsByChurch.length > 0" ng-repeat="mission in missionsByChurch track by mission.id">
           <div class="row">
             <div class="col-3 offset-md-1" style="margin-top: 15px; margin-left: 0px" ng-show="mission.acf.photo">
-              <img ng-src="{{mission.acf.photo}}" width="100" />
+              <img ng-src="{{mission.acf.photo}}" width="120" />
             </div>
             <div class="col-3 offset-md-1" style="margin-top: 15px; margin-left: 0px" ng-show="!mission.acf.photo">
-              <img src="https://ripplemissions.com/wp-content/uploads/2019/04/ripple-icon-192.jpg" width="100" />
+              <img src="https://ripplemissions.com/wp-content/uploads/2019/04/ripple-icon-192.jpg" width="120" />
             </div>
-            <div class="col" style="margin-left: 0px;">
-              <h3>{{mission.acf.name|amp}}</h3>  
+            <div class="col" style="margin-left: 20px;">
+              <h3 style="font-size: 6.0vw">{{mission.acf.name|amp}}</h3>  
               <div style="margin-top: -10px">
                 <div class="text-muted">
-                  <div ng-if="mission.acf.category">Serving in {{mission.acf.category}}</div>
-                  <div ng-if="mission.acf.country"> in {{mission.acf.country}}</div>
+                  <div ng-if="mission.acf.category">{{mission.acf.category}} <span ng-if="mission.acf.country" style="margin-top: -5px;"> in {{mission.acf.country.name}}</span></div>
+                  <div style="font-size: 16px;">
+                    <div class="f32" style="display: inline;">
+                      <div class="flag {{mission.acf.country.slug}}"></div>
+                    </div>
+                    <span style="margin-top: 7px !important; margin-left: 5px; position: absolute;">
+                      <a class="link" style="margin-left: 5px; line-height: 0.8em" target="_blank" href="https://www.cia.gov/library/publications/the-world-factbook/geos/{{mission.acf.country.slug}}.html">CIA Facts <i class="fas fa-fw fa-external-link-alt"></i></a>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,9 +162,10 @@
             <div class="col-1"></div>  
             <div class="col" style="margin-right: 20px;">
               <h4>Bio:</h4>
-              <p><small>{{mission.acf.bio}}</small></p>
+              <span class="wysiwyg-html" ng-bind-html="mission.acf.bio"></span>
             </div>
           </div>
+          <!--CONTACT INFO-->
           <div class="row">
             <div class="col-1"></div>  
             <div class="col" style="margin-right: 20px;">
@@ -175,6 +204,8 @@
               </div>
             </div>
           </div>
+          <!--/CONTACT INFO-->
+          <!--DONATION INFO-->
           <div class="row">
             <div class="col-1"></div>  
             <div class="col" style="margin-right: 20px;" ng-show="mission.acf.paypal_email || mission.acf.donation_url || mission.acf.donation_instructions">
@@ -182,6 +213,7 @@
               <div ng-if="mission.acf.paypal_email">
                 <span><ripple-donate-once email="mission.acf.paypal_email" /></span>
                 <span><br /><ripple-donate-monthly email="mission.acf.paypal_email" /></span>
+                <br /><p class="text-muted"><small>Ripple Missions does not see or store your info, we just make it easy to give. Donations are secured and encrypted through PayPal.</small></p>
               </div>
               <div ng-if="mission.acf.donation_url">
                 <br /><strong>Donate Here:</strong><br /> 
@@ -193,14 +225,24 @@
               </div>
               <div ng-if="mission.acf.wishlist" class="clear">
                 <br /><strong>Wishlist Items:</strong><br /> 
-                <li ng-repeat="line in (mission.acf.wishlist | newlines) track by $index">
+                <li ng-repeat="line in (mission.acf.wishlist | newlines) track by $index" ng-if="line">
                     {{line}}
                 </li>
-                <br /><p class="text-muted"><small>Items you send are a great encouragement to those serving overseas.</small></p>
+                <p class="text-muted"><small>Items you send are a great encouragement to those serving overseas.</small></p>
               </div>
             </div>
             <br />
           </div>
+          <!--/DONATION INFO-->
+          <!--COUNTRY INFO-->
+          <div class="row">
+            <div class="col-1"></div> 
+            <div class="col" style="margin-right: 20px;">
+              <h4>Country Info:</h4>
+              
+            </div>
+          </div>
+          <!--/COUNTRY INFO-->
           <div class="bottom-border"></div>
         </div>
       </div>
@@ -209,7 +251,8 @@
       <br /><br />
       <div class="col-md-12" ng-if="missionsByChurch.length > 0">
         <h4>Where in the world is Missy McMissions?</h4>
-        Oops! Are we missing a missionary? Please add them here: <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a> or email us at <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a>. We'll add them for you!
+        Oops! Are we missing a missionary? Please add them here: <a href="http://ripplemissions.com/suggest" class="">ripplemissions.com/suggest</a> 
+        or email us at <a href="mailto:pebble@ripplemissions.com">pebble@ripplemissions.com</a>. We'll add them for you!<br />
       </div>
   </script>
 <!--/HOME-->
@@ -264,6 +307,7 @@
         </div>
     </div>
   </script>
+
 <!--/SETTINGS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>

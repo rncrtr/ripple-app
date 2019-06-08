@@ -1,5 +1,7 @@
 'use strict';
 
+angular.module('ripple').constant('__env',env);
+
 // GLOBAL COMPONENTS
 angular.module('goback', []).directive('goback', function() {
   return {
@@ -80,7 +82,7 @@ angular.module('ripple')
         '<strong class="ripple-donate-title">Paypal Donate (one-time):</strong>' +
         '<input type="text" name="amount" value="" class="ripple-donate-amount form-control" placeholder="$ - One-Time Amount" />' +
         '<button type="submit" class="ripple-donate-button ripple-donate-button-once btn btn-sm btn-block btn-primary">Donate One-Time</button>' +
-        '<small>Paypal account NOT required.</small>'+
+        '<small><b>NOTE:</b> Paypal account NOT required.</small>'+
       '</form>'
   };
 });
@@ -103,7 +105,7 @@ angular.module('ripple')
       '<strong class="ripple-donate-title">Paypal Donate (monthly):</strong>'+
       '<input type="text" name="a3" value="" class="ripple-donate-amount form-control" placeholder="$ - Monthly Amount" />'+
       '<button type="submit" class="ripple-donate-button ripple-donate-button-monthly btn btn-sm btn-block btn-primary">Donate Monthly</button>'+
-      '<small>Paypal account required for monthly donations.</small>'+
+      '<small><b>NOTE:</b> Paypal account is required for monthly donations.</small>'+
     '</form>'
   };
 });
@@ -118,6 +120,7 @@ angular.module('ripple').factory('DataService',['$http',function($http){
     BASE_URL: BASE_URL,
     getList: getList,
     getMissionsByChurchName: getMissionsByChurchName,
+    getCountryInfo: getCountryInfo,
     addDoc: addDoc,
     updateDoc: updateDoc,
     deleteDoc: deleteDoc,
@@ -136,8 +139,16 @@ angular.module('ripple').factory('DataService',['$http',function($http){
   }
 
   function getMissionsByChurchName(church_name){
-    return $http.get('https://ripplemissions.com/wp-json/acf/v3/posts?filter[meta_key]=church_name&filter[meta_value]='+church_name,config).then(function(resp){
+    return $http.get('https://ripplemissions.com/wp-json/acf/v3/posts?filter[meta_key]=church_name&filter[meta_value]='+church_name+'&filter[orderby]=post_title&order=asc',config).then(function(resp){
       //var respData = resp.data;
+      return resp;
+    },function(error){
+      console.log(' ERROR:',error);
+    });
+  }
+
+  function getCountryInfo(countrycode){
+    return $http.get('http://joshuaproject.net/api/v2/countries?ROG3='+countrycode+'&api_key='+env.JoshuaProjectApiKey,config).then(function(resp){
       return resp;
     },function(error){
       console.log(' ERROR:',error);
@@ -210,7 +221,7 @@ angular.module('ripple.home', [])
   });
 }])
 
-.controller('HomeCtrl', ['$scope','DataService','$timeout','$localStorage', function ($scope,DataService,$timeout,$localStorage) {
+.controller('HomeCtrl', ['$scope','DataService','$timeout','$localStorage','$sce', function ($scope,DataService,$timeout,$localStorage, $sce) {
   
   // Init: Not set, don't show change link
   // Set prev: Try to set it from localStorage
@@ -266,12 +277,29 @@ angular.module('ripple.home', [])
           var respdata = resp.data;
           // parsing
           console.log(respdata);
-          $scope.missionsByChurch = resp.data;
+          angular.forEach(respdata, function(value, key) {
+            //console.log(value.acf.bio);
+            if(value.acf.bio){
+              respdata[key].acf.bio = $sce.trustAsHtml(value.acf.bio);
+            }
+            if(value.acf.country.slug){
+              respdata[key].acf.countryinfo = $scope.getCountryInfo(value.acf.country.slug);
+            }
+          });
+          console.log(respdata);
+          $scope.missionsByChurch = respdata;
           $scope.loading = false;
           $scope.storeChurchInfo();
         });
       }
     }, 400);
+  }
+
+  $scope.getCountryInfo = function(countrycode){
+    DataService.getCountryInfo(countrycode).then(function(resp){
+      console.log('Country Info',resp);
+      return resp;
+    });
   }
 
   $scope.storeChurchInfo = function(){
