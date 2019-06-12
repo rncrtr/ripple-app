@@ -45,13 +45,6 @@
   </script>
 </head>
 <body id="body">
-  <script type="text/javascript">
-    // init maps api
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://maps.googleapis.com/maps/api/js?key='+env.GoogleMapsApiKey+'&libraries=places';
-      document.body.appendChild(script);
-  </script>
   <div class="container-fluid" style="margin: 0px; padding: 0px;">
     <!--
     <nav-menu></nav-menu>
@@ -146,14 +139,6 @@
               <div style="margin-top: -10px">
                 <div class="text-muted">
                   <div ng-if="mission.acf.category">{{mission.acf.category}} <span ng-if="mission.acf.country" style="margin-top: -5px;"> in {{mission.acf.country.name}}</span></div>
-                  <div style="font-size: 16px;">
-                    <div class="f32" style="display: inline;">
-                      <div class="flag {{mission.acf.country.slug}}"></div>
-                    </div>
-                    <span style="margin-top: 7px !important; margin-left: 5px; position: absolute;">
-                      <a class="link" style="margin-left: 5px; line-height: 0.8em" target="_blank" href="https://www.cia.gov/library/publications/the-world-factbook/geos/{{mission.acf.country.slug}}.html">CIA Facts <i class="fas fa-fw fa-external-link-alt"></i></a>
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -239,7 +224,39 @@
             <div class="col-1"></div> 
             <div class="col" style="margin-right: 20px;">
               <h4>Country Info:</h4>
-              
+            </div>
+          </div>
+          <div class="row" style="font-size: 14px;">
+            <div class="col-1"></div>
+            <div class="f32 col-1" style="display: inline;">
+              <div class="flag {{mission.acf.countryinfo.slug}}"></div>
+            </div>
+            <div class="col" style="font-size: 24px; margin-top: 0px;">{{mission.acf.countryinfo.data[0].acf.country}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+              <strong>Population:</strong><br />
+              <strong>Language:</strong><br />
+              <strong>Literacy&nbsp;Rate:</strong><br />
+              <strong>Religion:</strong><br />
+              <strong>Evangelical:</strong><br />
+            </div>
+            <div class="col">
+              {{mission.acf.countryinfo}}
+              {{mission.acf.countryinfo.population | number:0}}<br />
+              {{mission.acf.countryinfo.language}}<br />
+              {{mission.acf.countryinfo.literacy_rate | number:2}}%<br />
+              {{mission.acf.countryinfo.religion}}<br />
+              {{mission.acf.countryinfo.evangelicalpercent | number:2}}%<br />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col" style="font-size: 16px;">
+              <a class="link" style="line-height: 0.8em" target="_blank" href="https://www.cia.gov/library/publications/the-world-factbook/geos/{{mission.acf.country.slug}}.html">
+                More Info <i class="fas fa-fw fa-external-link-alt"></i>
+              </a>
             </div>
           </div>
           <!--/COUNTRY INFO-->
@@ -307,7 +324,13 @@
         </div>
     </div>
   </script>
-
+  <script type="text/javascript">
+    // init maps api
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key='+env.GoogleMapsApiKey+'&libraries=places';
+      document.body.appendChild(script);
+  </script>
 <!--/SETTINGS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0/angular-route.min.js"></script>

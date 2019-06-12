@@ -115,7 +115,7 @@ angular.module('ripple')
 // DATA SERVICE
 angular.module('ripple').factory('DataService',['$http',function($http){
   var BASE_URL = 'https://ripplemissions.com/';
-  var config = {"Content-Type":"application/json", Cache: true};
+  var config = {"Content-Type":"application/json"};
   return {
     BASE_URL: BASE_URL,
     getList: getList,
@@ -148,7 +148,7 @@ angular.module('ripple').factory('DataService',['$http',function($http){
   }
 
   function getCountryInfo(countrycode){
-    return $http.get('http://joshuaproject.net/api/v2/countries?ROG3='+countrycode+'&api_key='+env.JoshuaProjectApiKey,config).then(function(resp){
+    return $http.get('https://ripplemissions.com/wp-json/acf/v3/countries?filter[meta_key]=slug&filter[meta_value]='+countrycode,config).then(function(resp){
       return resp;
     },function(error){
       console.log(' ERROR:',error);
@@ -276,29 +276,33 @@ angular.module('ripple.home', [])
           console.log('Missions by Church',resp);
           var respdata = resp.data;
           // parsing
-          console.log(respdata);
+          //console.log(respdata);
           angular.forEach(respdata, function(value, key) {
-            //console.log(value.acf.bio);
             if(value.acf.bio){
-              respdata[key].acf.bio = $sce.trustAsHtml(value.acf.bio);
-            }
-            if(value.acf.country.slug){
-              respdata[key].acf.countryinfo = $scope.getCountryInfo(value.acf.country.slug);
+              respdata[key].acf.bio = $sce.trustAsHtml(value.acf.bio); 
             }
           });
-          console.log(respdata);
+          //console.log(respdata);
           $scope.missionsByChurch = respdata;
           $scope.loading = false;
           $scope.storeChurchInfo();
+          return respdata;
+        }).then(function(){
+          angular.forEach($scope.missionsByChurch, function(value, key) {
+            $scope.getCountryInfo(key,value.acf.country.slug);
+          });
         });
       }
     }, 400);
+
   }
 
-  $scope.getCountryInfo = function(countrycode){
-    DataService.getCountryInfo(countrycode).then(function(resp){
-      console.log('Country Info',resp);
-      return resp;
+  $scope.getCountryInfo = function(key,countrycode){
+    return DataService.getCountryInfo(countrycode).then(function(resp){
+      console.log($scope.missionsByChurch[key].acf,resp.data);
+      var country_info = resp.data[0].acf;
+      console.log(country_info);
+      $scope.missionsByChurch[key].acf.countryinfo = country_info;
     });
   }
 
