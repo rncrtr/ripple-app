@@ -9,5 +9,7 @@ $(document).ready(function () {
 
   $('.about').append('Version: '+window.version);
     
+  $('[data-toggle="tooltip"]').tooltip();
+
 // end jquery
 });

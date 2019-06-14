@@ -174,8 +174,10 @@
 .f32 .ne{background-position:0 -5408px;}
 .f32 .ng{background-position:0 -5440px;}
 .f32 .ni{background-position:0 -5472px;}
-.f32 .nl{background-position:0 -5504px;}  .f32 .bq{background-position:0 -5504px;}
-.f32 .no{background-position:0 -5536px;}  .f32 .bv, .f32 .nq, .f32 .sj{background-position:0 -5536px;}
+.f32 .nl{background-position:0 -5504px;}  
+.f32 .bq{background-position:0 -5504px;}
+.f32 .no{background-position:0 -5536px;}  
+.f32 .bv, .f32 .nq, .f32 .sj{background-position:0 -5536px;}
 .f32 .np{background-position:0 -5568px;}
 .f32 .nr{background-position:0 -5600px;}
 .f32 .nz{background-position:0 -5632px;}
@@ -229,7 +231,7 @@
 .f32 .tv{background-position:0 -7168px;}
 .f32 .tw{background-position:0 -7200px;}
 .f32 .tz{background-position:0 -7232px;}
-.f32 .ua{background-position:0 -7264px;}
+.f32 .ua, .f32 .up{background-position:0 -7264px;}
 .f32 .ug{background-position:0 -7296px;}
 .f32 .us{background-position:0 -7328px;}
 .f32 .uy{background-position:0 -7360px;}

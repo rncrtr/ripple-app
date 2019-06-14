@@ -148,7 +148,7 @@ angular.module('ripple').factory('DataService',['$http',function($http){
   }
 
   function getCountryInfo(countrycode){
-    return $http.get('https://ripplemissions.com/wp-json/acf/v3/countries?filter[meta_key]=slug&filter[meta_value]='+countrycode,config).then(function(resp){
+    return $http.get('https://ripplemissions.com/wp-json/wp/v2/countries?slug='+countrycode,config).then(function(resp){
       return resp;
     },function(error){
       console.log(' ERROR:',error);
@@ -279,7 +279,8 @@ angular.module('ripple.home', [])
           //console.log(respdata);
           angular.forEach(respdata, function(value, key) {
             if(value.acf.bio){
-              respdata[key].acf.bio = $sce.trustAsHtml(value.acf.bio); 
+              respdata[key].acf.bio = $sce.trustAsHtml(value.acf.bio);
+              respdata[key].acf.prayer_requests = $sce.trustAsHtml(value.acf.prayer_requests);
             }
           });
           //console.log(respdata);
@@ -289,7 +290,7 @@ angular.module('ripple.home', [])
           return respdata;
         }).then(function(){
           angular.forEach($scope.missionsByChurch, function(value, key) {
-            $scope.getCountryInfo(key,value.acf.country.slug);
+            getCountryInfo(key,value.acf.country.slug);
           });
         });
       }
@@ -297,12 +298,35 @@ angular.module('ripple.home', [])
 
   }
 
-  $scope.getCountryInfo = function(key,countrycode){
+  function comparePovertyLevelYears( a, b ) {
+    if ( a.yearrecorded < b.yearrecorded ){
+      return 1;
+    }
+    if ( a.yearrecorded > b.yearrecorded ){
+      return -1;
+    }
+    return 0;
+  }
+
+  function getCountryInfo(key,countrycode){
     return DataService.getCountryInfo(countrycode).then(function(resp){
-      console.log($scope.missionsByChurch[key].acf,resp.data);
       var country_info = resp.data[0].acf;
-      console.log(country_info);
+      //console.log('ctry: ',country_info);
       $scope.missionsByChurch[key].acf.countryinfo = country_info;
+
+      // poverty level numbers
+      var poverty_levels = country_info.povertylevels;
+      var nonblank_poverty_levels = poverty_levels.filter(function(povertylevel){
+        return povertylevel.poverty190percent !== "";
+      });
+      //console.log(nonblank_poverty_levels);
+      var sorted_poverty_levels = nonblank_poverty_levels.sort(comparePovertyLevelYears);
+      //console.log(sorted_poverty_levels);
+      if(sorted_poverty_levels.length > 0){
+        $scope.missionsByChurch[key].acf.countryinfo.latestpovertylevel = sorted_poverty_levels[0];
+        //console.log($scope.missionsByChurch[key].acf.countryinfo.latestpovertylevel);
+      }
+      
     });
   }
 

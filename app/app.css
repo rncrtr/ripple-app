@@ -29,19 +29,20 @@ h3{padding-top: 10px;}
 h4{margin-top: 20px; font-size: 20px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #6c757d;}
 .nav-link{ padding: 10px 10px !important; }
 .ext-link{ margin-left: 10px; }
-.page{margin-top: 46px; padding: 0px; height: auto;}
+.page{margin-top: 46px; padding: 0px; height: auto; background: #e0e0e0;}
 .list-group-item i{ position: absolute; margin-top: 5px; right: 10px; }
 .list-group-item:first-child { border-radius: 0px !important; }
 
-.listitems{ margin-top: -30px !important; }
-.listitem{ border-top: 0px solid #6c757d; margin-top: 0px; padding-top: 30px; }
-.bottom-border{border-bottom: 2px solid #0094FF; width: 90%; margin: 0 5%; padding-top: 20px;}
+.listitems{ margin-top: -30px !important; padding-top: 10px; padding-bottom: 10px;}
+.listitem{ border-top: 0px solid #6c757d; margin-top: 0px; margin-bottom: 20px; padding-top: 0px; background-color: white; border-radius: 7px; margin-left: 10px; margin-right: 10px;}
+.bottom-border{border-bottom: 0px solid #0094FF; width: 90%; margin: 0 5%; padding-top: 20px;}
 .link{ color: #007bff !important; text-decoration: underline; }
 .link-white{ color: #FFF !important; }
 .no-border{ border: none; }
 .iframe-loader {
   background:url(../assets/images/loader.gif) top center no-repeat;
 }
+.round7{border-radius: 7px; background: white; padding-top: 10px; margin: 0px 10px 20px 10px;}
 .fullwidth{width: 100%;}
 .bold{font-weight: bold;}
 .nopad{padding-left: 0px !important; padding-right: 0px !important; }
@@ -82,7 +83,7 @@ background-image: -o-linear-gradient(left, #ccc, #333, #ccc);
 .card{margin-top: 10px;}
 
 .wysiwyg-html p{line-height: 1.3em !important; font-size: 14px;}
-
+.font14{font-size: 14px;}
 
 /* Loading.io Ripple Spinner */
 .lds-css{

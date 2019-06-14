@@ -1,4 +1,10 @@
 'use strict';
+var env = {};
+
+// Import variables if present (from env.js)
+if(window){  
+  Object.assign(env, window.__env);
+}
 /* global angular */
 // Declare app level module which depends on views, and components
 angular.module('ripple', [
@@ -11,8 +17,9 @@ angular.module('ripple', [
   'navMenu',
   'ngStorage',
   'filters'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+])
+.constant('__env', env)
+.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.html5Mode(true);
 
   $routeProvider.otherwise({redirectTo: '/home'});
