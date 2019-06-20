@@ -128,9 +128,13 @@
             </div>
             <div class="col" style="margin-left: 20px;">
               <h3 style="font-size: 5.5vw">{{mission.acf.name|amp}}</h3>  
-              <div style="margin-top: -10px">
+              <div style="margin-top: -5px">
                 <div class="text-muted" style="padding-right: 10px;">
                   <div ng-if="mission.acf.category">{{mission.acf.category}} <span ng-if="mission.acf.country" style="margin-top: -5px;"> in&nbsp;{{mission.acf.country.name}}</span></div>
+                </div>
+                <div class="text-muted" style="padding-right: 10px;">
+                  <div ng-if="mission.acf.org && !mission.acf.orglink">{{mission.acf.org}}</div>
+                  <div ng-if="mission.acf.org && mission.acf.orglink"><a class="link" target="_blank" ng-href="{{mission.acf.orglink}}">{{mission.acf.org}}</a></div>
                 </div>
               </div>
             </div>
@@ -171,6 +175,10 @@
                 <i class="fab fa-fw fa-instagram" title="Instagram"></i>
                 <a class="link" ng-href="https://instagram.com/{{mission.acf.instagram}}">@{{mission.acf.instagram|nohttp}}</a>
               </div>
+              <div ng-if="mission.acf.youtube">
+                <i class="fab fa-fw fa-youtube" title="YouTube"></i>
+                <a class="link" ng-href="{{mission.acf.youtube}}">YouTube Channel</a>
+              </div>
               <div ng-if="mission.acf.whatsapp">
                 <i class="fab fa-fw fa-whatsapp" title="Whatsapp"></i>
                 <a class="link" ng-href="mission.acf.whatsapp">{{mission.acf.whatsapp|nohttp}}</a>
@@ -192,13 +200,12 @@
                 <span><br /><ripple-donate-monthly email="mission.acf.paypal_email" /></span>
                 <br /><p class="text-muted"><small>Ripple Missions does not see or store your info, we just make it easy to give. Donations are secured and encrypted through PayPal.</small></p>
               </div>
-              <div ng-if="mission.acf.donation_url">
-                <br /><strong>Donate Here:</strong><br /> 
-                <a class="link" ng-href="{{mission.acf.donation_url}}">{{mission.acf.donation_url}}</a>
-              </div>
               <div ng-if="mission.acf.donation_instructions">
                 <br /><strong>More Info:</strong><br /> 
                 {{mission.acf.donation_instructions}}
+              </div>
+              <div ng-if="mission.acf.donation_url">
+                <br /><a class="btn btn-primary" ng-href="{{mission.acf.donation_url}}">Donate Here</a><br /><br />
               </div>
               <div ng-if="mission.acf.wishlist" class="clear">
                 <br /><strong>Wishlist Items:</strong><br /> 
@@ -256,7 +263,7 @@
           <!-- POVERTY -->
           <div class="row font14">
             <div class="col-1"></div>
-            <div class="col-6" style="margin-left: 5px;"><strong>Poverty ($1.90/day):</strong><br /></div>
+            <div class="col-6" style="margin-left: 5px;"><strong>Poverty < $2/day:</strong><br /></div>
             <div class="col">{{mission.acf.countryinfo.latestpovertylevel.poverty190percent | number:2}}% ({{mission.acf.countryinfo.latestpovertylevel.yearrecorded}})<br /></div>
           </div>
           <!-- HOMELESSNESS -->
