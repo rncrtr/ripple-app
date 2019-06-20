@@ -6,7 +6,7 @@ angular.module('ripple').constant('__env',env);
 angular.module('goback', []).directive('goback', function() {
   return {
     template: 
-      '<ul class="list-group">'+
+      '<ul class="list-group go-back">'+
           '<li class="list-group-item no-border">'+
               '<a href="/home">'+
                   '<span class="fas fa-fw fa-chevron-left text-left"></span>'+
@@ -376,6 +376,18 @@ angular.module('ripple.bugs', ['ngRoute'])
 }])
 
 .controller('BugsCtrl', [function() {
+
+}]);
+
+// CONTACT
+//////////////////////////////////////////////////////////
+angular.module('ripple.contact', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/contact', { templateUrl: 'contact.html', controller: 'ContactCtrl' });
+}])
+
+.controller('ContactCtrl', [function() {
 
 }]);
 

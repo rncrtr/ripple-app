@@ -13,6 +13,7 @@ angular.module('ripple', [
   'ripple.settings',
   'ripple.about',
   'ripple.bugs',
+  'ripple.contact',
   'goback',
   'navMenu',
   'ngStorage',

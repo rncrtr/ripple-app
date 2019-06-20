@@ -36,10 +36,14 @@
 <body id="body">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiCb9lPiSP6BejEACJ4Aql07tdegzGUo8&libraries=places"></script>
   <div class="container-fluid" style="margin: 0px; padding: 0px;">
+      <div style="margin-top: 0px; width: 100%; background-color: #0094FF; position: relative;">
+        <img src="assets/images/ripple-missions-icon.jpg" style="width: 42px" />&nbsp;&nbsp;
+        <img src="assets/images/ripple-missions-words-white.png" style="padding-top: 5px; width: 45%" />
+      </div>
     <!--
     <nav-menu></nav-menu>
     -->
-    <div ng-view autoscroll></div>
+    <div ng-view autoscroll style="margin-top: -50px;"></div>
   </div>
   <div id="settings" class="page" style="display: none" ng-controller="SettingsCtrl">
     <div class="col">
@@ -62,10 +66,6 @@
 <!--HOME-->  
   <script type="text/ng-template" id="home.html">
     <div class="page container-fluid" style="padding-bottom: 20px;">
-      <div style="margin-top: -50px; width: 100%; background-color: #0094FF;">
-        <img src="assets/images/ripple-missions-icon.jpg" style="width: 42px" />&nbsp;&nbsp;
-        <img src="assets/images/ripple-missions-words-white.png" style="padding-top: 5px; width: 45%" />
-      </div>
       <div class="row round7 clear" style="margin-top: 15px; padding-bottom: 10px; margin-bottom: 30px;">
         <div class="col">
           <input id="church-search" type="text" class="form-control" style="margin-top: 15px;" ng-model="churchQuery" ng-show="!confirmChurch && !displayChurchQuery" ng-blur="showChurchConfirm()" placeholder="Type Church Name" />
@@ -313,7 +313,7 @@
       </div>
       <div class="center">
         <small>
-          <a href="/about">About</a>&nbsp;|&nbsp;<a href="/bugs">Problems?</a>&nbsp;|&nbsp;<a href="/contact-us">Contact Us</a>
+          <a href="/about">About</a>&nbsp;|&nbsp;<a href="/bugs">Problems?</a>&nbsp;|&nbsp;<a href="/contact">Contact Us</a>
           <br /><b>&copy; 2019 Ripple Missions</b> v1.1
         </small>
       </div>
@@ -321,42 +321,79 @@
 <!--/HOME-->
 <!--ABOUT-->
   <script type="text/ng-template" id="about.html">
-    <div class="page">
-        <goback></goback>
+    <goback></goback>
+    <div class="page-white container-fluid" style="padding-bottom: 20px;">
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col about">
             <div class="page-title">About</div>
-                <p>
-                Ripple Missions is located in Colorado Springs, CO. <br />
-                </p>
-                <p>Our privacy policy is located <a class="link" href="http://ripplemissions.com/privacy-policy">on our website</a>.</p>
-                <p>Photos by <a href="https://pixabay.com" class="link">Pixabay</a> and <a href="https://unsplash.com" class="link">Unsplash</a></p>
+            <a title="Viewfromthepeak [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:PikesPeakFromUCCS.jpg"><img width="100%" alt="PikesPeakFromUCCS" src="https://upload.wikimedia.org/wikipedia/commons/8/86/PikesPeakFromUCCS.jpg"></a>
+            Ripple Missions is located in beautiful Colorado Springs, Colorado<br /><br />
+            Ripple was founded in 2019 by Ryan Carter, a software engineer and web developer, who wanted to find a better way to connect churches to missions.<br /><br />  
+            You can <a href="/contact">contact us here</a>.<br /><br />
+            <div class="page-title"><small>Our Mission</small></div>
+            <b>Firstly:</b>
+            <br />Our goal is simple. 
+            Connect churches and their people to the missions work going on overseas for support, encouragement, and engagement.<br /><br /> 
+            We want missionary info on every Christian's mobile device if possible. 
+            We believe this will allow greater visibility and awareness, leading to deeper engagement with missions work and the people doing it.<br /><br />
+            <b>Secondly:</b>
+              <br />Our secondary goal is to set an example of extreme accountability and generousity. For this reason we are focused on the task, and have decided that <u>we WILL NOT accept financial donations</u>. 
+              We have enough. 
+              f you'd like to contribute to the cause, please do, by giving to missionaries you know. 
+              <br /><br />They are doing real work and need real support. 
+              If you can't give, please pray. 
+              If you feel you can't pray (effectively), send a message to encourage them. 
+              Above all <i>do something</i> to promote those doing good work in the world. 
+              God knows we need more of it.
+            <br /><br />
+            <div class="page-title"><small>Legal</small></div>
+            Our privacy policy is located <a class="link" href="http://ripplemissions.com/privacy-policy">on our website</a>.<br /><br />
+            Photos by <a href="https://pixabay.com" class="link">Pixabay</a> and <a href="https://unsplash.com" class="link">Unsplash</a> unless otherwise specified.<br /><br />
+            Country information by <a href="https://joshuaproject.net/" target="_blank">The Joshua Project</a>, <a href="https://www.cia.gov/library/publications/the-world-factbook/" target="_blank">CIA World Factbook</a>, and <a href="https://en.wikipedia.org/wiki/List_of_countries_by_homeless_population" target="_blank">"List of countries by homeless population" Wikipedia page</a> (sources as referenced).<br /><br />
+            
         </div>
     </div>
   </script>
 <!--/ABOUT-->
 <!--BUGS-->
   <script type="text/ng-template" id="bugs.html">
-    <div class="page">
-        <goback></goback>
+  <goback></goback>
+    <div class="page-white container-fluid" style="padding-bottom: 20px;">
         <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
         <div class="col">
             <div class="page-title">Bug Reports&nbsp;<i class="fas fa-bug"></i></div>
-              <p><br />
-              Find a bug or spot a typo in our app? Oh noez! Have a question or suggestion for the app?<br /><br />Please email Ryan directly here: <a href="mailto:ryan@ripplemissions.com" class="link">ryan@ripplemissions.com</a>.</p>
+              <br />
+              Find a bug or spot a typo in our app? Oh noez! Have a question or suggestion for the app?<br /><br />
 
-              <p>
-              We want to provide the best experience possible for you, so please let us know how we can improve.
-              <br /><br />
+              Please email me directly here: <a href="mailto:ryan@ripplemissions.com" class="link">ryan@ripplemissions.com</a>.
+              
+              We want to provide the best experience possible for you, so please let us know how we can improve.<br /><br />
+
               Thanks for your interest in making this app better!
 
               <br /><br />
-              - Ripple Missions
+              - Ryan Carter
+              <br />Founder/Developer
+              <br />Ripple Missions
               </p>
         </div>
     </div>
   </script>
 <!--/BUGS-->
+<!--CONTACT-->
+  <script type="text/ng-template" id="contact.html">
+  <goback></goback>
+    <div class="page-white container-fluid" style="padding-bottom: 20px;">
+        <img ng-if="topBanner" width="100%" ng-src="assets/images/{{topBanner}}" />
+        <div class="col about">
+            <div class="page-title">Contact Us</div>
+            <b>Phone:</b> 719-401-5893<br />
+            <p class="text-muted" style="line-height: 1.2em !important; font-size: 14px;">Please note: since I work during the day, I won't be able to answer the phone, but please feel free to leave a message or text. If needed, we can setup a time to chat live over email if you like.</small>
+            <br /><br /><b>Email:</b> <a href="mailto:ryan@ripplemissions.com" target="_blank">ryan@ripplemissions.com</a><br />
+        </div>
+    </div>
+  </script>
+<!--/CONTACT-->
 <!--SETTINGS-->
   <script type="text/ng-template" id="settings.html">
     <div class="page" ng-controller="SettingsCtrl">
