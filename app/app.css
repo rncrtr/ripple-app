@@ -31,7 +31,8 @@ h3{padding-top: 10px;}
 h4{margin-top: 20px; font-size: 20px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #6c757d;}
 .nav-link{ padding: 10px 10px !important; }
 .ext-link{ margin-left: 10px; }
-.page{margin-top: 46px; padding: 0px; height: auto; background: #e0e0e0;}
+.page{margin-top: 46px; padding: 0px; height: auto; min-height: 90vh; background: #e0e0e0;}
+.footer{background: #e0e0e0;}
 .page-white{margin-top: 0px; padding-top: 10px; min-height: 85vh; width: 96%; background: #FFFFFF; border-radius: 7px;}
 .list-group-item i{ position: absolute; margin-top: 5px; right: 10px; }
 .list-group-item:first-child { border-radius: 0px !important; }
